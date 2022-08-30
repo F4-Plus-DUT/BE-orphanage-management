@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'api_base',
+    'api_user',
 ]
 
 MIDDLEWARE = [
@@ -177,3 +178,47 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'handlers': {
+        'info': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'formatter': 'simple'
+        },
+        'error': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'formatter': 'verbose'
+        }
+    },
+    'loggers': {
+        'info': {
+            'handlers': ['info'],
+            'level': 'WARNING',
+            'propagate': True,
+        },
+        'error': {
+            'handlers': ['error'],
+            'level': 'ERROR',
+            'propagate': True,
+        }
+    }
+}
