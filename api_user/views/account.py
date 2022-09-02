@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from api_user.models import Account
 from api_user.serializers import AccountSerializer, LoginAccountSerializer
 from api_user.serializers.user import CUUserSerializer
-from api_user.services import AccountService, UserService
+from api_user.services import AccountService, UserService, TokenService
 from base.consts import HttpMethod, ErrorResponse, ErrorResponseType
 from base.views import BaseViewSet
 
@@ -22,7 +22,6 @@ class AccountViewSet(BaseViewSet):
     @action(detail=False, methods=[HttpMethod.POST])
     def sign_in(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        print("xxx")
         if serializer.is_valid(raise_exception=True):
             login_data = AccountService.login(serializer.validated_data)
             if login_data:
@@ -40,3 +39,16 @@ class AccountViewSet(BaseViewSet):
                 return Response(resp, status=status.HTTP_201_CREATED)
             else:
                 return ErrorResponse(ErrorResponseType.CANT_CREATE, params=["user"])
+
+    @action(detail=False, methods=[HttpMethod.GET])
+    def refresh_new_token(self, request, *args, **kwargs):
+        token = request.query_params.get("token", "")
+        response_data = {}
+
+        if token:
+            response_data = TokenService.refresh_new_token(token)
+
+        if response_data:
+            return Response(response_data)
+        else:
+            return ErrorResponse(ErrorResponseType.INVALID, params=["token"])

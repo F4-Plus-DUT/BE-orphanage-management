@@ -9,7 +9,9 @@ class ErrorResponseType(Enum):
     GENERAL = (4001, "{0}")
     CANT_DEACTIVATE = (4002, "{0} can't be deactivated")
     CANT_ACTIVATE = (4003, "{0} can't be activated")
-    CANT_CREATE = (4004, "{0} can't be created'")
+    CANT_CREATE = (4004, "{0} can't be created")
+    EMPTY = (4005, "{0} can't be empty")
+    INVALID = (4005, "{0} is invalid")
 
     def __init__(self, code: int, error_message: str):
         self.code = code
