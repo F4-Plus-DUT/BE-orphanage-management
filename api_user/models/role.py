@@ -1,6 +1,7 @@
 from django.db import models
 
-from api_base.models import TimeStampedModel
+from api_user.managers import RoleManager
+from base.models import TimeStampedModel
 
 
 class Role(TimeStampedModel):
@@ -8,6 +9,8 @@ class Role(TimeStampedModel):
     scope_text = models.TextField()
     description = models.TextField()
     is_default = models.BooleanField(default=False)
+
+    objects = RoleManager()
 
     class Meta:
         db_table = 'roles'

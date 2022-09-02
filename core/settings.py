@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework_simplejwt',
-    'api_base',
+    'base',
     'api_user',
 ]
 
@@ -179,46 +179,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
-        },
-    },
-    'filters': {
-        'require_debug_true': {
-            '()': 'django.utils.log.RequireDebugTrue',
-        },
-    },
-    'handlers': {
-        'info': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'formatter': 'simple'
-        },
-        'error': {
-            'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'formatter': 'verbose'
-        }
-    },
-    'loggers': {
-        'info': {
-            'handlers': ['info'],
-            'level': 'WARNING',
-            'propagate': True,
-        },
-        'error': {
-            'handlers': ['error'],
-            'level': 'ERROR',
-            'propagate': True,
-        }
-    }
-}
+AUTH_USER_MODEL = 'api_user.Account'

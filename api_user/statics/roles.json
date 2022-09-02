@@ -1,0 +1,14 @@
+[
+  {
+    "name": "user",
+    "scope_text": "",
+    "description": "user",
+    "is_default": true
+  },
+  {
+    "name": "admin",
+    "scope_text": "*",
+    "description": "administrator",
+    "is_default": false
+  }
+]

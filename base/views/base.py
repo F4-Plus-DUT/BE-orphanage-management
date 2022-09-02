@@ -2,7 +2,8 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from api_base.consts import ScopeAction
+from base.consts import ScopeAction, Flag, ErrorResponse, ErrorResponseType
+from base.utils.model import ModelUtils
 
 
 class BaseViewSet(viewsets.ModelViewSet):
@@ -35,21 +36,20 @@ class BaseViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['put'])
     def deactivate(self, request, *args, **kwargs):
         instance = self.get_object()
-        instance.is_activate = False
-        account = getattr(instance, 'account', None)
-        if account:
-            account.is_activate = False
-            account.save()
-        instance.save()
-        return Response({"details": "deactivated"})
+        is_success = ModelUtils.active_instance(instance, Flag.OFF)
+        if is_success:
+            return Response({"details": "deactivated"})
+        else:
+            return ErrorResponse(ErrorResponseType.CANT_DEACTIVATE, params=[f"{ModelUtils.get_model_name(instance)} with id: {instance.pk}"])
 
     @action(detail=True, methods=['put'])
     def activate(self, request, *args, **kwargs):
         instance = self.get_object()
-        instance.is_activate = True
-        instance.save()
-        account = getattr(instance, 'account', None)
-        if account:
-            account.is_activate = True
-            account.save()
-        return Response({"details": "activated"})
+        is_success = ModelUtils.active_instance(instance, Flag.ON)
+        if is_success:
+            return Response({"details": "activated"})
+        else:
+            return ErrorResponse(
+                ErrorResponseType.CANT_ACTIVATE,
+                params=[f"{ModelUtils.get_model_name(instance)} with id: {instance.pk}"]
+            )

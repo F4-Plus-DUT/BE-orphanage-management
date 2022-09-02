@@ -1,4 +1,4 @@
-from api_base.views import BaseViewSet
+from base.views import BaseViewSet
 from api_user.models import Role
 from api_user.serializers import RoleSerializer
 
