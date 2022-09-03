@@ -19,8 +19,8 @@ class CUUserSerializer(ModelSerializer):
 
     def validate_email(self, value):
         duplicated_email = Account.objects.by_email(value)
-        if duplicated_email.exists():
-            raise ValidationError("Email already exists")
+        if  duplicated_email is not None:
+            raise ValidationError("Email already exists.")
         return value
 
     class Meta:
