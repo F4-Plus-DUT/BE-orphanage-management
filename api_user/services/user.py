@@ -2,14 +2,14 @@ from typing import Optional
 
 from django.db import transaction
 
-from api_user.models.user import User
+from api_user.models.profile import Profile
 from api_user.services import AccountService, RoleService, TokenService
 
 
 class UserService:
     @classmethod
     @transaction.atomic
-    def create(cls, user_data: dict) -> Optional[User]:
+    def create(cls, user_data: dict) -> Optional[Profile]:
         """
         Create a new user with new account and default role
         :param user_data:
@@ -22,12 +22,12 @@ class UserService:
             account['role'] = default_role
             account_instance = AccountService.create(account)
             user_data['account'] = account_instance
-            user = User(**user_data)
+            user = Profile(**user_data)
             user.save()
         return user
 
     @classmethod
-    def login_success_data(cls, user: User):
+    def login_success_data(cls, user: Profile):
         """
         Return success data for login
         :param user:

@@ -1,9 +1,9 @@
-from api_user.models.user import User
-from api_user.serializers import UserSerializer
+from api_user.models.profile import Profile
+from api_user.serializers import ProfileSerializer
 from base.views import BaseViewSet
 
 
-class UserViewSet(BaseViewSet):
+class ProfileViewSet(BaseViewSet):
     view_set_name = "user"
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer

@@ -1,3 +1,3 @@
 from .role import Role
 from .account import Account
-from .user import User
+from .profile import Profile

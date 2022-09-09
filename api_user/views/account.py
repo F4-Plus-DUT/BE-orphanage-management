@@ -4,7 +4,7 @@ from rest_framework.response import Response
 
 from api_user.models import Account
 from api_user.serializers import AccountSerializer, LoginAccountSerializer
-from api_user.serializers.user import CUUserSerializer
+from api_user.serializers.user import CUProfileSerializer
 from api_user.services import AccountService, UserService, TokenService
 from base.consts import HttpMethod, ErrorResponse, ErrorResponseType
 from base.views import BaseViewSet
@@ -16,7 +16,7 @@ class AccountViewSet(BaseViewSet):
     serializer_class = AccountSerializer
     serializer_map = {
         "sign_in": LoginAccountSerializer,
-        "sign_up": CUUserSerializer,
+        "sign_up": CUProfileSerializer,
     }
 
     @action(detail=False, methods=[HttpMethod.POST])

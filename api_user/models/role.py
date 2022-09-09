@@ -6,8 +6,9 @@ from base.models import TimeStampedModel
 
 class Role(TimeStampedModel):
     name = models.CharField(max_length=255, unique=True)
-    scope_text = models.TextField()
+    scope_text = models.TextField(default="", blank=True)
     description = models.TextField()
+    last_modified_by = models.CharField(max_length=255, default="", blank=True)
     is_default = models.BooleanField(default=False)
 
     objects = RoleManager()
