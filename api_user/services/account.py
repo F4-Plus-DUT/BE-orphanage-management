@@ -37,5 +37,5 @@ class AccountService:
         password = login_data.get('password', "")
         account = Account.objects.by_email(email)
         if account and check_password(password, account.password):
-            response_data = UserService.login_success_data(account.user)
+            response_data = UserService.login_success_data(account.profile)
         return response_data

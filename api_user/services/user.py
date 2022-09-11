@@ -27,10 +27,10 @@ class UserService:
         return user
 
     @classmethod
-    def login_success_data(cls, user: Profile):
+    def login_success_data(cls, profile: Profile):
         """
         Return success data for login
-        :param user:
+        :param profile:
         :return: dictionary data with general user information and token
         included fields:
         - id
@@ -40,12 +40,16 @@ class UserService:
         - access_token
         - refresh_token
         """
-        token_data = TokenService.generate_by_account(user.account)
+        token_data = TokenService.generate_by_account(profile.account)
+        roles = profile.account.roles.all()
+        scopes = ""
+        for role in roles:
+            scopes += (role.scope_text + " ")
         user_data = {
-            'id': user.id,
-            'first_name': user.first_name,
-            'last_name': user.last_name,
-            'avatar': user.account.avatar,
+            'id': profile.id,
+            'name': profile.name,
+            'avatar': profile.account.avatar,
+            'scopes': scopes
         }
         data = {**token_data, **user_data}
         return data

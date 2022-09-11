@@ -9,7 +9,6 @@ class Role(TimeStampedModel):
     scope_text = models.TextField(default="", blank=True)
     description = models.TextField()
     last_modified_by = models.CharField(max_length=255, default="", blank=True)
-    is_default = models.BooleanField(default=False)
 
     objects = RoleManager()
 

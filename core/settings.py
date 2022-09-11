@@ -12,10 +12,13 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+from os.path import join, dirname
 import cloudinary
 
 from dotenv import load_dotenv
 from datetime import timedelta
+from utils import read_scopes
+
 
 load_dotenv()
 
@@ -184,6 +187,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'api_user.Account'
+
+#jwt
+SCOPES_JSON_PATH = join(BASE_DIR, "api_user/statics/scopes.json")
+DEFAULT_SCOPES_JSON_PATH = join(BASE_DIR, "api_user/statics/default_scopes.json")
+SCOPES: dict = read_scopes(SCOPES_JSON_PATH)
+DEFAULT_SCOPES: dict = read_scopes(DEFAULT_SCOPES_JSON_PATH)
 
 #cloudinary
 cloudinary.config(cloud_name=os.getenv('CLOUDINARY_NAME'),

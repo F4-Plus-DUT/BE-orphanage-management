@@ -7,4 +7,4 @@ class AccountManager(models.Manager):
         return self.get_queryset().filter(email=email).first()
 
     def by_id(self, pk):
-        return self.get_queryset().filter(id=pk).first()
+        return self.get_queryset().filter(id=pk).first().prefetch_related("roles")

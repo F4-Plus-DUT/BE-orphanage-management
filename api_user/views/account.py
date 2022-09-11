@@ -12,7 +12,7 @@ from base.views import BaseViewSet
 
 class AccountViewSet(BaseViewSet):
     view_set_name = "account"
-    queryset = Account.objects.all()
+    queryset = Account.objects.all().prefetch_related("roles")
     serializer_class = AccountSerializer
     serializer_map = {
         "sign_in": LoginAccountSerializer,

@@ -12,8 +12,7 @@ class Profile(TimeStampedModel):
         FEMALE = 2
         OTHER = 3
 
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
     gender = TinyIntegerField(choices=GenderChoices.choices)
     birthday = models.DateField(null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
@@ -29,4 +28,4 @@ class Profile(TimeStampedModel):
     account = models.OneToOneField(Account, on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
-        db_table = 'users'
+        db_table = 'profiles'

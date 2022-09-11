@@ -2,6 +2,7 @@ from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from api_user.models import Account
+import requests
 
 
 class TokenService:
@@ -12,6 +13,7 @@ class TokenService:
         :param account:
         :return: data with access_token and refresh_token
         """
+
         token = RefreshToken.for_user(account)
         data = {
             "access_token": str(token.access_token),
