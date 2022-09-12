@@ -4,6 +4,7 @@ from django.db import transaction
 
 from api_user.models.profile import Profile
 from api_user.services import AccountService, RoleService, TokenService
+from core.settings import SCOPES
 
 
 class UserService:
@@ -34,8 +35,8 @@ class UserService:
         :return: dictionary data with general user information and token
         included fields:
         - id
-        - first_name
-        - last_name
+        - name
+        - scopes
         - avatar
         - access_token
         - refresh_token
@@ -45,6 +46,8 @@ class UserService:
         scopes = ""
         for role in roles:
             scopes += (role.scope_text + " ")
+        if scopes.__contains__("__all__"):
+            scopes = " ".join(SCOPES.keys())
         user_data = {
             'id': profile.id,
             'name': profile.name,
