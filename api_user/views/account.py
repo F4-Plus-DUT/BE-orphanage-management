@@ -8,7 +8,14 @@ from base.views import BaseViewSet
 
 class AccountViewSet(BaseViewSet):
     view_set_name = "account"
-    queryset = Account.objects.all().prefetch_related("roles")
+    queryset = Account.objects.select_related("profile").prefetch_related("roles")
     permission_classes = [MyActionPermission | IsAuthenticated]
     serializer_class = AccountSerializer
-    serializer_map = {}
+    required_alternate_scopes = {
+        "list": [["user:view_ger_info"]]
+    }
+
+    def list(self, request, *args, **kwargs):
+        page = self.paginate_queryset(self.get_queryset())
+        data = self.get_serializer(page, many=True).data
+        return self.get_paginated_response(data)

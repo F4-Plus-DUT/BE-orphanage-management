@@ -25,7 +25,7 @@ class Profile(TimeStampedModel):
             MinLengthValidator(9),
         ],
     )
-    account = models.OneToOneField(Account, on_delete=models.CASCADE, null=True, blank=True)
+    account = models.OneToOneField(Account, on_delete=models.CASCADE, null=True, blank=True, related_name="profile")
 
     class Meta:
         db_table = 'profiles'

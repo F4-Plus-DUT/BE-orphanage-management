@@ -30,7 +30,7 @@ class MyActionPermission(BasePermission):
     def get_scopes_user_role(cls, roles):
         user_scopes = []
         if roles:
-            for role in roles:
+            for role in roles.all():
                 scope_text = role.scope_text
                 if scope_text == '__all__':
                     return [SCOPES.keys()]

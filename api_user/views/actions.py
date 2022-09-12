@@ -53,4 +53,3 @@ class ActionViewSet(BaseViewSet):
             return Response(response_data)
         else:
             return ErrorResponse(ErrorResponseType.INVALID, params=["token"])
-
