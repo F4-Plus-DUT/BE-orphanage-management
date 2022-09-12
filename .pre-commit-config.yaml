@@ -1,17 +1,50 @@
 default_language_version:
   # default language version for each language
-  python: python3.10.5
+  python: python3.10
 repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.4.0
+  - repo: 'https://github.com/pre-commit/pre-commit-hooks'
+    rev: v4.0.1
     hooks:
-      # See https://pre-commit.com/hooks.html for more hooks
-      - id: check-ast
+      - id: check-json
+      - id: check-yaml
+      - id: name-tests-test
+        args:
+          - '--django'
+        exclude: "(factories/|_factory.py$)"
+      - id: requirements-txt-fixer
+      - id: check-symlinks
+      - id: check-docstring-first
+      - id: detect-private-key
+      - id: forbid-new-submodules
+      - id: check-added-large-files
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
       - id: check-case-conflict
-      - id: check-executables-have-shebangs
       - id: check-merge-conflict
       - id: debug-statements
-      - id: end-of-file-fixer
-      - id: name-tests-test
-        args: [ "--django" ]
-      - id: trailing-whitespace
+  - repo: 'https://github.com/PyCQA/flake8'
+    rev: 3.9.2
+    hooks:
+      - id: flake8
+        args:
+          - >-
+            --ignore=
+              B001,B006,
+              C901,
+              E121,E126,E127,E128,E131,E203,E226,E251,E261,E262,E265,E401,E402,E501,E502,E722,
+              F401,F401,F403,F403,F405,F405,F541,F541,
+              N801,N802,N803,N806,N812,N814,N814,
+              SIM102,SIM105,SIM106,SIM110,SIM118,SIM210,SIM300,
+              T001,
+              W292,W292,W391,W503,W503,W504,W504,
+              TYP001,
+          - '--max-line-length=120'
+          - '--max-complexity=30'
+          # - '--select=B,C,E,F,W,T4,B9'
+        additional_dependencies:
+          - pep8-naming
+          - flake8-typing-imports==1.10.1
+          - flake8-bugbear
+          - flake8-mutable
+          - flake8-print
+          - flake8-simplify

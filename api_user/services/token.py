@@ -2,7 +2,6 @@ from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from api_user.models import Account
-import requests
 
 
 class TokenService:
@@ -16,8 +15,8 @@ class TokenService:
 
         token = RefreshToken.for_user(account)
         data = {
-            "access_token": str(token.access_token),
-            "refresh_token": str(token),
+            'access_token': str(token.access_token),
+            'refresh_token': str(token),
         }
         return data
 
@@ -32,13 +31,13 @@ class TokenService:
         try:
             token_instance = RefreshToken(token=token)
             payload = token_instance.payload
-            account_id = payload.get("user_id", "")
+            account_id = payload.get('user_id', '')
             account = Account.objects.by_id(account_id)
             if account:
                 new_token = RefreshToken.for_user(account)
                 data = {
-                    "refresh_token": str(new_token),
-                    "access_token": str(new_token.access_token),
+                    'refresh_token': str(new_token),
+                    'access_token': str(new_token.access_token)
                 }
         except TokenError:
             pass
