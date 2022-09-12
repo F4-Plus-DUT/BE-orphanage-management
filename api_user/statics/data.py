@@ -9,7 +9,7 @@ class RoleData(Enum):
         "description": "administrator",
     }
 
-    MANAGER = {
+    CUSTOMER = {
         "id": "45905ee5131544cf8f8235cb9d838b75",
         "name": "Customer",
         "scope_text": "",

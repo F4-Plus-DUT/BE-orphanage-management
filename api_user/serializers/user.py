@@ -12,7 +12,7 @@ class ProfileSerializer(ModelSerializer):
         fields = "__all__"
 
 
-class CUProfileSerializer(ModelSerializer):
+class ProfileSerializer(ModelSerializer):
     email = serializers.EmailField(source='account.email')
     password = serializers.CharField(min_length=8, source="account.password")
     avatar = serializers.CharField(source='account.avatar', required=False)
@@ -25,4 +25,4 @@ class CUProfileSerializer(ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('id', 'first_name', 'last_name', 'gender', 'email', 'password', 'avatar')
+        fields = ('id', 'name', 'gender', 'email', 'password', 'avatar')
