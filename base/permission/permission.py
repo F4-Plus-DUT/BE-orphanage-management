@@ -1,10 +1,7 @@
-import logging
-
-from django.core.exceptions import ImproperlyConfigured
 from rest_framework.permissions import BasePermission
 
 from api_user.statics import RoleData
-from core.settings import SCOPES, DEFAULT_SCOPES
+from core.settings import SCOPES
 
 
 class MyActionPermission(BasePermission):
@@ -33,7 +30,5 @@ class MyActionPermission(BasePermission):
                 scope_text = role.scope_text
                 if role.id == RoleData.ADMIN.value.get('id'):
                     return [SCOPES.keys()]
-                if role.id == RoleData.CUSTOMER.value.get('id'):
-                    return [DEFAULT_SCOPES.keys()]
                 user_scopes.append(scope for scope in scope_text.split(' '))
         return user_scopes
