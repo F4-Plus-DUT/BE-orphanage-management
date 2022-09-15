@@ -1,6 +1,6 @@
 from django.db.models import Model
 
-from base.consts import Flag
+from common.constants.base import Flag
 
 
 class ModelUtils:

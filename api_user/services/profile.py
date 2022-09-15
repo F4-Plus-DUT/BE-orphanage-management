@@ -2,15 +2,15 @@ from typing import Optional
 
 from django.db import transaction
 
-from api_user.models.profile import Profile
+from api_user.models import Profile
 from api_user.services import AccountService, RoleService, TokenService
 from core.settings import SCOPES
 
 
-class UserService:
+class ProfileService:
     @classmethod
     @transaction.atomic
-    def create(cls, user_data: dict) -> Optional[Profile]:
+    def create_customer(cls, user_data: dict) -> Optional[Profile]:
         """
         Create a new user with new account and default role
         :param user_data:
@@ -19,9 +19,8 @@ class UserService:
         user = None
         account = user_data.pop('account', {})
         if account:
-            default_role = RoleService.get_default_role()
-            account['role'] = default_role
-            account_instance = AccountService.create(account)
+            default_role = RoleService.get_role_customer()
+            account_instance = AccountService.create(account, default_role)
             user_data['account'] = account_instance
             user = Profile(**user_data)
             user.save()

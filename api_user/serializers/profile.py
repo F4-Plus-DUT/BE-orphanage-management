@@ -6,10 +6,10 @@ from api_user.models import Account
 from api_user.models.profile import Profile
 
 
-class ProfileSerializer(ModelSerializer):
+class ProfileDetailSerializer(ModelSerializer):
     class Meta:
         model = Profile
-        fields = "__all__"
+        exclude = ['account', 'is_active']
 
 
 class ProfileSerializer(ModelSerializer):
