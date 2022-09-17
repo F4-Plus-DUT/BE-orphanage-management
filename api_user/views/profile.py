@@ -4,6 +4,6 @@ from base.views import BaseViewSet
 
 
 class ProfileViewSet(BaseViewSet):
-    view_set_name = "user"
+    view_set_name = "profile"
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer

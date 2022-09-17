@@ -8,3 +8,4 @@ class RoleSerializer(ModelSerializer):
     class Meta:
         model = Role
         fields = "__all__"
+        read_only_fields = ['name']
