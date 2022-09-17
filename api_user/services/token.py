@@ -1,3 +1,5 @@
+import datetime
+
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -15,7 +17,8 @@ class TokenService:
 
         token = RefreshToken.for_user(account)
         data = {
-            'access_token': str(token.access_token),
+            'token': str(token.access_token),
+            'dateExpired': str(datetime.datetime.now() + token.lifetime),
             'refresh_token': str(token),
         }
         return data

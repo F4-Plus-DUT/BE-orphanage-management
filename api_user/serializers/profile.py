@@ -7,9 +7,15 @@ from api_user.models.profile import Profile
 
 
 class ProfileDetailSerializer(ModelSerializer):
+    roles = serializers.SerializerMethodField()
+
     class Meta:
         model = Profile
-        exclude = ['account', 'is_active']
+        exclude = ['account']
+
+    def get_roles(self, obj):
+        roles = obj.account.roles.all()
+        return [{"id": role.id, "name": role.name} for role in roles]
 
 
 class ProfileSerializer(ModelSerializer):

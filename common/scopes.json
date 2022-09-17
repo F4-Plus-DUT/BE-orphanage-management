@@ -1,5 +1,6 @@
 {
   "admin:invite_user": "Invite user",
+  "admin:reset_password": "Reset password for user",
   "user:view_private_info": "View all user private information",
   "user:view_ger_info":"View my general information",
   "user:edit_public_info":"Edit public information",

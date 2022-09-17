@@ -13,6 +13,7 @@ class Profile(TimeStampedModel):
         OTHER = 3
 
     name = models.CharField(max_length=255)
+    personal_email = models.EmailField(max_length=255, unique=True, null=True)
     gender = TinyIntegerField(choices=GenderChoices.choices)
     birthday = models.DateField(null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)

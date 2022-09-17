@@ -25,11 +25,12 @@ class MyActionPermission(BasePermission):
 
     @classmethod
     def get_scopes_user_role(cls, roles):
-        user_scopes = []
+        user_scopes = list()
         if roles:
             for role in roles.all():
                 scope_text = role.scope_text
                 if role.name == RoleData.ADMIN.value.get('name'):
                     return list(SCOPES.keys())
-                user_scopes.append(scope for scope in scope_text.split(' '))
+                for scope in scope_text.split(' '):
+                    user_scopes.append(scope.strip())
         return user_scopes
