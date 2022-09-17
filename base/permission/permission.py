@@ -7,11 +7,12 @@ from core.settings import SCOPES
 class MyActionPermission(BasePermission):
     def has_permission(self, request, view):
         token = request.auth
-        user_roles = request.user.roles
-        user_scopes = self.get_scopes_user_role(user_roles)
 
         if not token:
             return False
+
+        user_roles = request.user.roles
+        user_scopes = self.get_scopes_user_role(user_roles)
 
         required_alternate_scopes = getattr(view, "required_alternate_scopes")
         action = view.action.lower()
@@ -28,7 +29,7 @@ class MyActionPermission(BasePermission):
         if roles:
             for role in roles.all():
                 scope_text = role.scope_text
-                if role.id == RoleData.ADMIN.value.get('id'):
-                    return [SCOPES.keys()]
+                if role.name == RoleData.ADMIN.value.get('name'):
+                    return list(SCOPES.keys())
                 user_scopes.append(scope for scope in scope_text.split(' '))
         return user_scopes

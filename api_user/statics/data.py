@@ -4,7 +4,7 @@ from enum import Enum
 class RoleData(Enum):
     ADMIN = {
         "id": "7a8f585dccb049ada11653bd0f550d59",
-        "name": "Admin",
+        "name": "Super Administrator",
         "scope_text": "__all__",
         "description": "administrator",
     }

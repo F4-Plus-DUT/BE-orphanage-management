@@ -1,0 +1,12 @@
+{
+  "admin:invite_user": "Invite user",
+  "user:view_private_info": "View all user private information",
+  "user:view_ger_info":"View my general information",
+  "user:edit_public_info":"Edit public information",
+  "user:edit_private_info":"Edit all user private information",
+  "user:activate_user": "Activate user",
+  "user:destroy": "Remove user",
+  "role:view": "View role",
+  "role:edit": "Edit role",
+  "user:set_role": "Set role for user"
+}

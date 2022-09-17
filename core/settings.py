@@ -35,7 +35,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '06dc-2001-ee0-1b1-d8b7-f52d-3d0f-c745-2b55.ap.ngrok.io']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '66e0-116-110-95-159.ap.ngrok.io']
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
@@ -63,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'base.middleware.middleware.MyCustomMiddleWare'
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -191,8 +192,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'api_user.Account'
 
 #jwt
-SCOPES_JSON_PATH = join(BASE_DIR, "api_user/statics/scopes.json")
-DEFAULT_SCOPES_JSON_PATH = join(BASE_DIR, "api_user/statics/default_scopes.json")
+SCOPES_JSON_PATH = join(BASE_DIR, "common/scopes.json")
+DEFAULT_SCOPES_JSON_PATH = join(BASE_DIR, "common/default_scopes.json")
 SCOPES: dict = read_scopes(SCOPES_JSON_PATH)
 DEFAULT_SCOPES: dict = read_scopes(DEFAULT_SCOPES_JSON_PATH)
 

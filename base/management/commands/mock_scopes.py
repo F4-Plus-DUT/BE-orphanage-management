@@ -19,8 +19,8 @@ class Command(BaseCommand):
             for role in roles:
                 scopes = set(split_scopes(role.scope_text))
                 new_default_scopes = default_scopes.difference(scopes)
-                if new_default_scopes:
-                    scopes = scopes.union(new_default_scopes)
+
+                scopes = scopes.union(new_default_scopes) if new_default_scopes else scopes
 
                 role.scope_text = concat_scopes(list(scopes))
                 role.save()

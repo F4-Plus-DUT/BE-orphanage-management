@@ -4,15 +4,15 @@ from rest_framework.response import Response
 
 from api_user.models import Account
 from api_user.serializers import LoginAccountSerializer, AccountSerializer
-from api_user.serializers.user import ProfileSerializer
-from api_user.services import AccountService, TokenService, UserService
-from base.consts import HttpMethod, ErrorResponse, ErrorResponseType
+from api_user.serializers.profile import ProfileSerializer
+from api_user.services import AccountService, TokenService, ProfileService
+from common.constants.base import HttpMethod, ErrorResponse, ErrorResponseType
 from base.views import BaseViewSet
 
 
 class ActionViewSet(BaseViewSet):
     permission_classes = []
-    view_set_name = "actions"
+    view_set_name = "action"
     queryset = Account.objects.all().prefetch_related("roles")
     serializer_class = AccountSerializer
     serializer_map = {
@@ -34,9 +34,9 @@ class ActionViewSet(BaseViewSet):
     def sign_up(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            user = UserService.create(serializer.validated_data)
+            user = ProfileService.create_customer(serializer.validated_data)
             if user:
-                resp = UserService.login_success_data(user)
+                resp = ProfileService.login_success_data(user)
                 return Response(resp, status=status.HTTP_201_CREATED)
             else:
                 return ErrorResponse(ErrorResponseType.CANT_CREATE, params=["user"])

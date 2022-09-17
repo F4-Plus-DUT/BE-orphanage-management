@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from base.consts import ScopeAction, Flag, ErrorResponse, ErrorResponseType
+from common.constants.base import Flag, ErrorResponse, ErrorResponseType
 from base.utils.model import ModelUtils
 
 
@@ -12,20 +12,6 @@ class BaseViewSet(viewsets.ModelViewSet):
     serializer_map = {}
     permission_map = {}
     view_set_name = "base"
-    base_scopes = {
-        ScopeAction.VIEW: f"{view_set_name}::{ScopeAction.VIEW.value}",
-        ScopeAction.EDIT: f"{view_set_name}::{ScopeAction.EDIT.value}",
-        ScopeAction.FULL: f"{view_set_name}::{ScopeAction.FULL.value}",
-    }
-    scope_mapper = {
-        "list": [base_scopes[ScopeAction.VIEW]],
-        "retrieve": [base_scopes[ScopeAction.VIEW]],
-        "create": [base_scopes[ScopeAction.EDIT]],
-        "update": [base_scopes[ScopeAction.EDIT]],
-        "partial_update": [base_scopes[ScopeAction.EDIT]],
-        "destroy": [base_scopes[ScopeAction.FULL]],
-    }
-    endpoint_descriptions = {}
 
     def get_serializer_class(self):
         return self.serializer_map.get(self.action, self.serializer_class)
