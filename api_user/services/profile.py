@@ -3,6 +3,7 @@ from typing import Optional
 from django.db import transaction
 
 from api_user.models import Profile
+from api_user.serializers import ProfileDetailSerializer
 from api_user.services import AccountService, RoleService, TokenService
 from core.settings import SCOPES
 
@@ -22,6 +23,7 @@ class ProfileService:
             default_role = RoleService.get_role_customer()
             account_instance = AccountService.create(account, default_role)
             user_data['account'] = account_instance
+            user_data['personal_email'] = user_data.pop("email", None)
             user = Profile(**user_data)
             user.save()
         return user
@@ -33,12 +35,11 @@ class ProfileService:
         :param profile:
         :return: dictionary data with general user information and token
         included fields:
-        - id
-        - name
         - scopes
         - avatar
         - access_token
         - refresh_token
+        - profile
         """
         token_data = TokenService.generate_by_account(profile.account)
         roles = profile.account.roles.all()
@@ -48,10 +49,10 @@ class ProfileService:
         if scopes.__contains__("__all__"):
             scopes = " ".join(SCOPES.keys())
         user_data = {
-            'id': profile.id,
-            'name': profile.name,
+            'email': profile.account.email,
             'avatar': profile.account.avatar,
-            'scopes': scopes
+            'permissions': scopes,
+            'profile': ProfileDetailSerializer(profile).data
         }
         data = {**token_data, **user_data}
         return data
