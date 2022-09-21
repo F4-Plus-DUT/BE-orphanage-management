@@ -8,4 +8,6 @@ class Scope(Const):
         "user": "User",
         "admin": "User",
         "role": "Role",
+        "children": "Children",
+        "employee": "Employee"
     }
