@@ -14,7 +14,9 @@ class ProfileViewSet(BaseViewSet):
     serializer_class = ProfileDetailSerializer
     permission_classes = [MyActionPermission]
     required_alternate_scopes = {
-        "retrieve": ["user:view_ger_info"]
+        "retrieve": ["user:view_ger_info"],
+        "update": ["user:edit_private_info", "user:edit_public_inf", "employee:edit_employee_info"],
+        "get_list_employee": ['employee:view_employee_info']
     }
 
     @action(methods=[HttpMethod.GET], detail=False)

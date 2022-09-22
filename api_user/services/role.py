@@ -11,7 +11,7 @@ class RoleService:
 
         :return: The customer role.
         """
-        role = Role.objects.by_id(id=RoleData.CUSTOMER.value.get('id'))
+        role = Role.objects.by_id(RoleData.CUSTOMER.value.get('id'))
         if not role:
             raise Exception('Missing default role')
         return role

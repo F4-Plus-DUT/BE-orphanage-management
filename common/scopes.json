@@ -9,5 +9,10 @@
   "user:destroy": "Remove user",
   "role:view": "View role",
   "role:edit": "Edit role",
-  "user:set_role": "Set role for user"
+  "user:set_role": "Set role for user",
+  "employee:view_employee_info": "View info employee",
+  "employee:edit_employee_info": "Edit info employee",
+  "employee:del_employee": "Delete employee",
+  "children:view_children_info": "View info children",
+  "children:edit_children_info": "Edit info children"
 }

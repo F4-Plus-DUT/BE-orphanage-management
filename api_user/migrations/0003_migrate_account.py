@@ -28,7 +28,6 @@ def init_account_data(apps, schema_editor):
     profile_model.objects.create(
         account=admin_account,
         name="Super Administrator",
-        personal_email=os.getenv("DEFAULT_ADMIN_EMAIL"),
         gender=3
     )
 

@@ -1,4 +1,6 @@
 {
   "user:view_ger_info":"View my general information",
-  "user:edit_public_info":"Edit public information"
+  "user:edit_public_info":"Edit public information",
+  "employee:view_employee_info": "View info employee",
+  "children:view_children_info": "View info children"
 }
