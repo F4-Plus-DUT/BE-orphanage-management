@@ -14,7 +14,7 @@ class Profile(TimeStampedModel):
 
     name = models.CharField(max_length=255)
     personal_email = models.EmailField(max_length=255, unique=True, null=True)
-    gender = TinyIntegerField(choices=GenderChoices.choices)
+    gender = TinyIntegerField(choices=GenderChoices.choices, default=GenderChoices.OTHER)
     birthday = models.DateField(null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     occupation = models.CharField(max_length=255, null=True, blank=True)
