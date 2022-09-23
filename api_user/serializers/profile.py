@@ -18,6 +18,12 @@ class ProfileDetailSerializer(ModelSerializer):
         return [{"id": role.id, "name": role.name} for role in roles]
 
 
+class LiveCustomerProfile(ModelSerializer):
+    class Meta:
+        model = Profile
+        exclude = ['account']
+
+
 class ProfileSerializer(ModelSerializer):
     email = serializers.EmailField(source='account.email')
     password = serializers.CharField(min_length=8, source="account.password")

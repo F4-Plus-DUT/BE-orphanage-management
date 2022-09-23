@@ -1,15 +1,17 @@
 from rest_framework.decorators import action
 
 from api_children.models import Children
+from api_children.serializers import ChildrenSerializer
 from base.permission.permission import MyActionPermission
 from base.views import BaseViewSet
 from common.constants.base import HttpMethod
 
 
-class ProfileViewSet(BaseViewSet):
+class ChildrenViewSet(BaseViewSet):
     view_set_name = "children"
     queryset = Children.objects.all()
     permission_classes = [MyActionPermission]
+    serializer_class = ChildrenSerializer
     required_alternate_scopes = {
         "retrieve": ["children:view_children_info"],
         "list": ["children:view_children_info"],
