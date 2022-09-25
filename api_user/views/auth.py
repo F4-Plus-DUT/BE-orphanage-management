@@ -18,20 +18,8 @@ class AuthViewSet(BaseViewSet):
     @action(methods=[HttpMethod.GET], detail=False)
     def retrieve_all_scopes(self, request, *args, **kwargs):
         scope_dict = SCOPES
-        group = {}
-        for key in scope_dict.keys():
-            if key != "*":
-                resource = Scope.GROUP_SCOPE.get(key.split(":")[0].strip())
-                if resource not in group:
-                    group[resource] = []
-                    group.get(resource).append(
-                        {"scope": key, "label": scope_dict.get(key)}
-                    )
-                else:
-                    group.get(resource).append(
-                        {"scope": key, "label": scope_dict.get(key)}
-                    )
         result = []
-        for key in group.keys():
-            result.append({"scope": key, "label": key, "children": group[key]})
+        for key in scope_dict.keys():
+            resource = Scope.GROUP_SCOPE.get(key.split(":")[0].strip())
+            result.append({"scope": key, "label": scope_dict.get(key), "group": resource})
         return Response({"scope": result})
