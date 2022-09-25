@@ -25,13 +25,13 @@ class AuthViewSet(BaseViewSet):
                 if resource not in group:
                     group[resource] = []
                     group.get(resource).append(
-                        {"scope": key, "label": scope_dict.get(key)}
+                        {"scope": key, "label": scope_dict.get(key), "group": resource}
                     )
                 else:
                     group.get(resource).append(
-                        {"scope": key, "label": scope_dict.get(key)}
+                        {"scope": key, "label": scope_dict.get(key), "group": resource}
                     )
         result = []
         for key in group.keys():
-            result.append({"scope": key, "label": key, "children": group[key]})
+            result.append({"label": key, "children": group[key]})
         return Response({"scope": result})
