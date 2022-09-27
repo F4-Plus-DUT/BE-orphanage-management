@@ -11,17 +11,11 @@ class ProfileDetailSerializer(ModelSerializer):
 
     class Meta:
         model = Profile
-        exclude = ['account']
+        exclude = ['account', 'is_vip_donor']
 
     def get_roles(self, obj):
         roles = obj.account.roles.all()
         return [{"id": role.id, "name": role.name} for role in roles]
-
-
-class LiveCustomerProfile(ModelSerializer):
-    class Meta:
-        model = Profile
-        exclude = ['account']
 
 
 class ProfileSerializer(ModelSerializer):
