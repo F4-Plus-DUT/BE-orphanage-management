@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'base',
     'api_user',
     'api_children',
+    'api_activity',
+    'api_statistic',
 ]
 
 MIDDLEWARE = [
