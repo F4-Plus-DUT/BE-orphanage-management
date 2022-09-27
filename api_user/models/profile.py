@@ -27,6 +27,7 @@ class Profile(TimeStampedModel):
         ],
     )
     account = models.OneToOneField(Account, on_delete=models.CASCADE, null=True, blank=True, related_name="profile")
+    is_vip_donor = models.BooleanField(default=False)
 
     class Meta:
         db_table = 'profiles'

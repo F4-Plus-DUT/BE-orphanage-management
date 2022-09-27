@@ -1,12 +1,13 @@
 import os
 
 from django.contrib.auth.hashers import make_password, check_password
-from requests import Response
 from rest_framework import status
 from rest_framework.decorators import action
+from rest_framework.response import Response
 
 from api_user.models import Account
 from api_user.serializers import AccountSerializer
+from api_user.services import ProfileService
 from base.permission.permission import MyActionPermission
 from base.views import BaseViewSet
 from common.constants.base import HttpMethod
@@ -21,7 +22,8 @@ class AccountViewSet(BaseViewSet):
         "list": ["user:view_ger_info"],
         "retrieve": ["user:view_ger_info"],
         "reset_password": ["admin:reset_password"],
-        "change_password": ["user:edit_pub_info"]
+        "change_password": ["user:edit_pub_info"],
+        "reload_page":  [],
     }
 
     def list(self, request, *args, **kwargs):
@@ -41,7 +43,7 @@ class AccountViewSet(BaseViewSet):
             return Response({"detail": "Changed password!"}, status=status.HTTP_204_NO_CONTENT)
         return Response({"error_message": "Old password is incorrect!"}, status=status.HTTP_400_BAD_REQUEST)
 
-    @action(methods=HttpMethod.PUT, detail=True)
+    @action(methods=[HttpMethod.PUT], detail=True)
     def reset_password(self, request, *args, **kwargs):
         instance = self.get_object()
         if instance:
@@ -49,3 +51,10 @@ class AccountViewSet(BaseViewSet):
             instance.save()
             return Response({"success": "Reset password!"}, status=status.HTTP_200_OK)
         return Response({"error_message": "Account id is not defined!"}, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(methods=[HttpMethod.POST], detail=False)
+    def reload_page(self, request, *args, **kwargs):
+        account = request.user
+        response_data = ProfileService.login_success_data(account.profile)
+        if response_data:
+            return Response(response_data)

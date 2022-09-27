@@ -1,10 +1,7 @@
-from rest_framework.decorators import action
-
 from api_children.models import Children
 from api_children.serializers import ChildrenSerializer
 from base.permission.permission import MyActionPermission
 from base.views import BaseViewSet
-from common.constants.base import HttpMethod
 
 
 class ChildrenViewSet(BaseViewSet):
