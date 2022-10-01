@@ -2,5 +2,9 @@
   "user:view_ger_info":"View my general information",
   "user:edit_public_info":"Edit public information",
   "employee:view_employee_info": "View info employee",
-  "children:view_children_info": "View info children"
+  "children:view_children_info": "View info children",
+  "children:adopt_request": "Request adopt children",
+  "activity:view_activity": "View activity",
+  "activity:comment_activity": "Comment activity",
+  "activity:donate": "Donate"
 }
