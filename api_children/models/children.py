@@ -1,8 +1,7 @@
-import datetime
 
 from django.db import models
 
-from api_user.models import Profile
+from django.utils import timezone
 from base.models import TimeStampedModel
 from base.models.fields import TinyIntegerField
 from common.constants.api_children import ChildrenStatus
@@ -18,7 +17,7 @@ class Children(TimeStampedModel):
     gender = TinyIntegerField(choices=GenderChoices.choices)
     age = models.IntegerField(null=True, blank=True)
     personal_picture = models.CharField(max_length=255, null=True, blank=True)
-    join_date = models.DateField(default=datetime.datetime.now(), null=True, blank=True)
+    join_date = models.DateField(default=timezone.now, null=True, blank=True)
     status = models.CharField(default=ChildrenStatus.UNADOPTED, max_length=10)
 
     class Meta:

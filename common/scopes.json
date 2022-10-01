@@ -14,5 +14,11 @@
   "employee:edit_employee_info": "Edit info employee",
   "employee:del_employee": "Delete employee",
   "children:view_children_info": "View info children",
-  "children:edit_children_info": "Edit info children"
+  "children:edit_children_info": "Edit info children",
+  "children:adopt_request": "Request adopt children",
+  "children:approve_request": "Manage request adopt children",
+  "activity:view_activity": "View activity",
+  "activity:edit_activity": "Edit activity",
+  "activity:comment_activity": "Comment activity",
+  "activity:donate": "Donate"
 }

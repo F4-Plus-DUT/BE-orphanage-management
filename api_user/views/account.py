@@ -23,7 +23,7 @@ class AccountViewSet(BaseViewSet):
         "retrieve": ["user:view_ger_info"],
         "reset_password": ["admin:reset_password"],
         "change_password": ["user:edit_pub_info"],
-        "reload_page":  [],
+        "reload_page": [],
     }
 
     def list(self, request, *args, **kwargs):
@@ -31,7 +31,7 @@ class AccountViewSet(BaseViewSet):
         data = self.get_serializer(page, many=True).data
         return self.get_paginated_response(data)
 
-    @action(detail=False, methods=['patch'])
+    @action(detail=False, methods=[HttpMethod.POST])
     def change_password(self, request, *args, **kwargs):
         account = request.user
         old_password = request.data.get('old_password')
