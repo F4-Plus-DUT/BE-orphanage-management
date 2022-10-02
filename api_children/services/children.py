@@ -19,8 +19,7 @@ class ChildrenService:
 
         age = age if age != 'undefined' else ''
         gender = gender if gender != 'undefined' else ''
-        status = status if age != 'all' else ''
-        gender = gender if gender != 'undefined' else ''
+        status = status if status != 'all' else ''
 
         filter_args = dict()
 
