@@ -16,6 +16,12 @@ class ChildrenService:
         age = request.query_params.get("age")
         gender = request.query_params.get("gender")
         status = request.query_params.get("status")
+
+        age = age if age != 'undefined' else ''
+        gender = gender if gender != 'undefined' else ''
+        status = status if age != 'all' else ''
+        gender = gender if gender != 'undefined' else ''
+
         filter_args = dict()
 
         if age:
@@ -32,7 +38,7 @@ class ChildrenService:
 
     @classmethod
     def init_data_children(cls, request):
-        data = request.data.dict()
+        data = request.data
         gender = int(data.get('gender'))
         personal_picture = request.FILES.get('personal_picture')
         if personal_picture:
