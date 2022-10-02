@@ -38,7 +38,7 @@ class ChildrenService:
 
     @classmethod
     def init_data_children(cls, request):
-        data = request.data
+        data = request.data.dict()
         gender = int(data.get('gender'))
         personal_picture = request.FILES.get('personal_picture')
         if personal_picture:
