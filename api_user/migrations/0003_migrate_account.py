@@ -25,7 +25,7 @@ def init_account_data(apps, schema_editor):
     # add role admin and profile
     admin_account.roles.add(admin_role)
     admin_account.save()
-    profile_model.objects.init_data_children(
+    profile_model.objects.create(
         account=admin_account,
         name="Super Administrator",
         gender=3
