@@ -23,7 +23,6 @@ class AccountViewSet(BaseViewSet):
         "retrieve": ["user:view_ger_info"],
         "reset_password": ["admin:reset_password"],
         "change_password": ["user:edit_pub_info"],
-        "reload_page": [],
     }
 
     def list(self, request, *args, **kwargs):
