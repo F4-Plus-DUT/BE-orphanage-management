@@ -1,6 +1,8 @@
 from typing import Optional
 
 from django.db import transaction
+from django.db.models import Value, Q
+from django.db.models.functions import Collate
 
 from api_user.models import Profile
 from api_user.serializers import ProfileDetailSerializer
@@ -56,3 +58,12 @@ class ProfileService:
         }
         data = {**token_data, **user_data}
         return data
+
+    @classmethod
+    def get_filter_query(cls, request, queryset):
+        name = request.query_params.get("name")
+        if name:
+            name = Collate(Value(name.strip()), "utf8mb4_general_ci")
+
+        queryset = queryset.filter(Q(name__icontains=name) | Q(personal_email__icontains=name))
+        return queryset

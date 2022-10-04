@@ -7,7 +7,7 @@ from api_user.statics import RoleData
 
 class RoleManager(models.Manager):
     def by_name(self, name: str):
-        return self.get_queryset().filter(name=name)
+        return self.get_queryset().filter(name=name).first()
 
     def by_id(self, role_id: uuid):
         return self.get_queryset().filter(id=role_id).first()
