@@ -11,6 +11,9 @@ from api_user.services import ProfileService
 from base.permission.permission import MyActionPermission
 from base.views import BaseViewSet
 from common.constants.base import HttpMethod
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class AccountViewSet(BaseViewSet):

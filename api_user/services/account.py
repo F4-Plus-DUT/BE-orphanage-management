@@ -1,8 +1,18 @@
+import os
+
 from typing import Optional
 
 from django.contrib.auth.hashers import make_password, check_password
+from django.db import transaction
 
-from api_user.models import Account, Role
+from api_user.models import Account, Role, Profile
+from api_user.statics import RoleData
+from base.services import TokenUtil
+from base.services.send_mail import SendMail
+from django.template.loader import render_to_string
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class AccountService:
@@ -44,3 +54,42 @@ class AccountService:
         if account and check_password(password, account.password):
             response_data = ProfileService.login_success_data(account.profile)
         return response_data
+
+    @classmethod
+    def invite(cls, email, name, base_link="{settings.UI_HOST}/verify"):
+        account_data = dict(
+            email=email,
+            password=os.getenv('DEFAULT_PASSWORD')
+        )
+        employee_role = Role.objects.by_id(RoleData.EMPLOYEE.value.get('id'))
+        cls.send_mail(email=email, name=name, send_email=True, base_link=base_link)
+        with transaction.atomic():
+            user = cls.create(account_data, employee_role)
+            profile = Profile.objects.create(
+                account=user,
+                name=name,
+                personal_email=email,
+            )
+        return {"success": True, "user": {"name": name, "email": email}}
+
+    @classmethod
+    def send_mail(
+            cls,
+            email=None,
+            name=None,
+            phone=None,
+            personal_email=None,
+            send_email=False,
+            base_link="",
+    ):
+        if send_email:
+            token = TokenUtil.verification_encode(name, email, phone, personal_email)
+            # TODO: Look at the link again
+            link = f"{base_link}?token={token}"
+            content = render_to_string(
+                "invite_email.html",
+                {"name": name, "email": email, "link": link, "token": token},
+            )
+            SendMail.start(
+                [email, personal_email], "Welcome to Orphanage Management", content
+            )

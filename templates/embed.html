@@ -1,0 +1,40 @@
+{% load render_bundle from webpack_loader %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../static/logo.ico" />
+    <script src="../../../../../static/libraries/jquery/jquery.min.js"></script>
+    <!--PPTX-->
+    <link
+      rel="stylesheet"
+      href="../../../../../static/libraries/PPTXjs/css/pptxjs.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../../../static/libraries/PPTXjs/css/nv.d3.min.css"
+    />
+
+    <script src="../../../../../static/libraries/PPTXjs/js/jszip.min.js"></script>
+    <script src="../../../../../static/libraries/PPTXjs/js/filereader.js"></script>
+    <script src="../../../../../static/libraries/PPTXjs/js/d3.min.js"></script>
+    <script src="../../../../../static/libraries/PPTXjs/js/nv.d3.min.js"></script>
+    <script src="../../../../../static/libraries/PPTXjs/js/pptxjs.js"></script>
+    <script src="../../../../../static/libraries/PPTXjs/js/divs2slides.js"></script>
+
+    <script src="../../../../../static/libraries/officeToHtml/officeToHtml.js"></script>
+    <link
+      rel="stylesheet"
+      href="../../../../../static/libraries/officeToHtml/officeToHtml.css"
+    />
+    <title>Embed</title>
+  </head>
+  <body>
+    <!-- This part is in the screenshot at the bottom! -->
+    <div id="embed"></div>
+    {% render_bundle 'embed' %}
+  </body>
+</html>

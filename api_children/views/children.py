@@ -19,7 +19,7 @@ class ChildrenViewSet(BaseViewSet):
         "retrieve": ["children:view_children_info"],
         "list": ["children:view_children_info"],
         "update": ["children:edit_children_info"],
-        "create": ["children:edit_children_info"],
+        "create": ["children:view_children_info"],
     }
 
     def list(self, request, *args, **kwargs):
