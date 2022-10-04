@@ -1,6 +1,7 @@
 from django.core.validators import RegexValidator, MinLengthValidator
 from django.db import models
 
+from api_user.managers import ProfileManager
 from api_user.models import Account
 from base.models import TimeStampedModel
 from base.models.fields import TinyIntegerField
@@ -28,6 +29,8 @@ class Profile(TimeStampedModel):
     )
     account = models.OneToOneField(Account, on_delete=models.CASCADE, null=True, blank=True, related_name="profile")
     is_vip_donor = models.BooleanField(default=False)
+
+    objects = ProfileManager()
 
     class Meta:
         db_table = 'profiles'

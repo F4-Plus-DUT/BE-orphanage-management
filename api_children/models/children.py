@@ -19,6 +19,7 @@ class Children(TimeStampedModel):
     personal_picture = models.CharField(max_length=255, null=True, blank=True)
     join_date = models.DateTimeField(default=timezone.now, null=True, blank=True)
     status = models.CharField(default=ChildrenStatus.UNADOPTED, max_length=10)
+    identifier = models.CharField(max_length=25, null=True, blank=True)
 
     class Meta:
         db_table = 'children'
