@@ -1,10 +1,13 @@
+import os
+
+from django.db import transaction
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from api_user.models.profile import Profile
-from api_user.serializers import ProfileSerializer, ProfileDetailSerializer
-from api_user.services import ProfileService
+from api_user.serializers import ProfileDetailSerializer, ProfileSerializer
+from api_user.services import ProfileService, RoleService
 from api_user.statics import RoleData
 from base.permission.permission import MyActionPermission
 from base.views import BaseViewSet
@@ -16,10 +19,14 @@ class ProfileViewSet(BaseViewSet):
     queryset = Profile.objects.active().all()
     serializer_class = ProfileDetailSerializer
     permission_classes = [MyActionPermission]
+    serializer_map = {
+        "create_employee": ProfileSerializer,
+    }
     required_alternate_scopes = {
         "retrieve": ["user:view_ger_info"],
         "update": ["user:edit_private_info", "user:edit_public_inf", "employee:edit_employee_info"],
-        "get_list_employee": ['employee:view_employee_info']
+        "get_list_employee": ['employee:view_employee_info'],
+        "create_employee": ["user:edit_private_info", "user:edit_public_inf", "employee:edit_employee_info"],
     }
 
     @action(methods=[HttpMethod.GET], detail=False)
@@ -29,6 +36,18 @@ class ProfileViewSet(BaseViewSet):
         page = self.paginate_queryset(queryset)
         data = self.get_serializer(page, many=True).data
         return self.get_paginated_response(data)
+
+    @action(methods=[HttpMethod.POST], detail=False)
+    def create_employee(self, request, *args, **kwargs):
+        data = request.data
+        data["password"] = os.getenv("DEFAULT_EMPLOYEE_PASSWORD")
+        serializer = self.get_serializer(data=data)
+        if serializer.is_valid(raise_exception=True):
+            with transaction.atomic():
+                user = ProfileService.create_profile(
+                    RoleService.get_role_employee(), serializer.validated_data)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return ErrorResponse(ErrorResponseType.CANT_CREATE, params=["profile"])
 
     def destroy(self, request, *args, **kwargs):
         try:

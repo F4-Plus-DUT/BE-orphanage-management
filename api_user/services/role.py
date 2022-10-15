@@ -25,7 +25,7 @@ class RoleService:
 
         :return: The employee role.
         """
-        role = Role.objects.by_id(id=RoleData.EMPLOYEE.value.get('id'))
+        role = Role.objects.by_id(RoleData.EMPLOYEE.value.get('id'))
         if not role:
             raise Exception('Missing employee role')
         return role

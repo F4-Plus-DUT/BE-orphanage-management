@@ -31,6 +31,25 @@ class ProfileService:
         return user
 
     @classmethod
+    @transaction.atomic
+    def create_profile(cls, default_role, user_data: dict) -> Optional[Profile]:
+        """
+        Create a new user with new account and default role
+        :param user_data:
+        :param default_role:
+        :return:
+        """
+        user = None
+        account = user_data.pop('account', {})
+        if account:
+            account_instance = AccountService.create(account, default_role)
+            user_data['account'] = account_instance
+            user_data['personal_email'] = user_data.pop("email", None)
+            user = Profile(**user_data)
+            user.save()
+        return user
+
+    @classmethod
     def login_success_data(cls, profile: Profile):
         """
         Return success data for login
