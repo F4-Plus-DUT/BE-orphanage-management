@@ -8,10 +8,11 @@ from api_user.models.profile import Profile
 
 class ProfileDetailSerializer(ModelSerializer):
     roles = serializers.SerializerMethodField()
+    avatar = serializers.CharField(source='account.avatar', required=False, read_only=True)
 
     class Meta:
         model = Profile
-        exclude = ['account', 'is_vip_donor']
+        exclude = ['account']
         ordering = ('created_at', 'updated_at')
 
     def get_roles(self, obj):

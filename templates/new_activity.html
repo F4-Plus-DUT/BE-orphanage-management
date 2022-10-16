@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title></title>
-    <link rel="stylesheet" href="" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
   </head>
   <body
     style="
@@ -29,7 +29,7 @@
         overflow: hidden;
       "
     >
-      We're thrilled to have you here! Get ready to dive into your new account.
+      We're thrilled to notify you for new activity of Organization!
     </div>
     ​
     <table style="border: 0; padding: 0; width: 100%; border-spacing: 0">
@@ -159,7 +159,7 @@
                     style="
                       background-color: white;
                       text-align: center;
-                      padding: 0 30px 40px 30px;
+                      padding: 0 10px 20px 10px;
                       border-radius: 0 0 4px 4px;
                       color: #666666;
                       font-family: Avenir, sans-serif;
@@ -168,7 +168,9 @@
                       line-height: 25px;
                     "
                   >
-                    {{ content }}
+                    <div class="w3-card-4 w3-container" style="width: 100%">
+                      <div class="w3-container w3-center">{{content|safe}}</div>
+                    </div>
                   </td>
                 </tr>
                 <!-- BULLETPROOF BUTTON -->
