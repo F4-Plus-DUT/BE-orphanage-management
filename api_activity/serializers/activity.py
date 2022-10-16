@@ -7,3 +7,4 @@ class ActivitySerializer(ModelSerializer):
     class Meta:
         model = Activity
         fields = '__all__'
+        ordering = ('created_at', 'updated_at')

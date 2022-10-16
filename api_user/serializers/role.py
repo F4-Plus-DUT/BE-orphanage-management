@@ -8,3 +8,4 @@ class RoleSerializer(ModelSerializer):
     class Meta:
         model = Role
         fields = "__all__"
+        ordering = ('created_at', 'updated_at')

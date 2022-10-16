@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api_activity', '0005_migrate_activity'),
+        ('api_activity', '0004_rename_description_activity_content'),
     ]
 
     operations = [

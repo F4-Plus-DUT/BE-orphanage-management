@@ -34,7 +34,6 @@ class ActionViewSet(BaseViewSet):
     def sign_up(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            # user = ProfileService.create_customer(serializer.validated_data)
             user = ProfileService.create_profile(RoleService.get_role_customer(), serializer.validated_data)
             if user:
                 resp = ProfileService.login_success_data(user)

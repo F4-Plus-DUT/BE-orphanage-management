@@ -12,6 +12,7 @@ class ProfileDetailSerializer(ModelSerializer):
     class Meta:
         model = Profile
         exclude = ['account', 'is_vip_donor']
+        ordering = ('created_at', 'updated_at')
 
     def get_roles(self, obj):
         roles = obj.account.roles.all()
@@ -32,3 +33,5 @@ class ProfileSerializer(ModelSerializer):
     class Meta:
         model = Profile
         fields = ('id', 'name', 'gender', 'email', 'password', 'avatar')
+        ordering = ('created_at', 'updated_at')
+

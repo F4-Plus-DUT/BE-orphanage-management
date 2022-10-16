@@ -1,1 +1,3 @@
+from .activity_type_group import ActivityTypeGroupSerializer
+from .activity_type import ActivityTypeSerializer
 from .activity import ActivitySerializer

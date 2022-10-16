@@ -27,6 +27,7 @@ class ProfileViewSet(BaseViewSet):
         "update": ["user:edit_private_info", "user:edit_public_inf", "employee:edit_employee_info"],
         "get_list_employee": ['employee:view_employee_info'],
         "create_employee": ["user:edit_private_info", "user:edit_public_inf", "employee:edit_employee_info"],
+        "create": ["user:edit_private_info", "user:edit_public_inf", "employee:edit_employee_info"],
     }
 
     @action(methods=[HttpMethod.GET], detail=False)
