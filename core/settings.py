@@ -33,7 +33,8 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '3f10-113-185-53-132.ap.ngrok.io', 'orphanage-management.azurewebsites.net']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '3f10-113-185-53-132.ap.ngrok.io',
+                 'orphanage-management-web-app.azurewebsites.net']
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
@@ -136,22 +137,6 @@ SIMPLE_JWT = {
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 # localhost
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': os.getenv('DB_NAME'),
-#         'USER': os.getenv('DB_USER'),
-#         'PASSWORD': os.getenv('DB_PASSWORD'),
-#         'HOST': os.getenv('DB_HOST'),
-#         'PORT': os.getenv('DB_PORT'),
-#         'OPTIONS': {
-#             'charset': 'utf8mb4',
-#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
-#         }
-#     }
-# }
-
-# azure-sql
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -162,11 +147,27 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT'),
         'OPTIONS': {
             'charset': 'utf8mb4',
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            'ssl': {'ssl-ca': '/var/www/html/BaltimoreCyberTrustRoot.crt.pem'},
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
         }
     }
 }
+
+# azure-sql
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': os.getenv('DB_NAME'),
+#         'USER': os.getenv('DB_USER'),
+#         'PASSWORD': os.getenv('DB_PASSWORD'),
+#         'HOST': os.getenv('DB_HOST'),
+#         'PORT': os.getenv('DB_PORT'),
+#         'OPTIONS': {
+#             'charset': 'utf8mb4',
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+#             'ssl': {'ssl-ca': '/var/www/html/BaltimoreCyberTrustRoot.crt.pem'},
+#         }
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
