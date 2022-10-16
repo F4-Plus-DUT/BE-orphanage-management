@@ -20,6 +20,34 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name='ActivityTypeGroup',
+            fields=[
+                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
+                ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
+                ('updated_at', models.DateTimeField(auto_now=True)),
+                ('name', models.CharField(max_length=255, unique=True)),
+            ],
+            options={
+                'db_table': 'activity_type_group',
+            },
+            bases=(dirtyfields.dirtyfields.DirtyFieldsMixin, models.Model),
+        ),
+        migrations.CreateModel(
+            name='ActivityType',
+            fields=[
+                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
+                ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
+                ('updated_at', models.DateTimeField(auto_now=True)),
+                ('name', models.CharField(max_length=255, unique=True)),
+                ('activity_type_group', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE,
+                                                          to='api_activity.activitytypegroup')),
+            ],
+            options={
+                'db_table': 'activity_type',
+            },
+            bases=(dirtyfields.dirtyfields.DirtyFieldsMixin, models.Model),
+        ),
+        migrations.CreateModel(
             name='Activity',
             fields=[
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
@@ -32,7 +60,8 @@ class Migration(migrations.Migration):
                 ('end_date', models.DateField(blank=True, null=True)),
                 ('picture', models.CharField(max_length=255)),
                 ('expense', models.FloatField(default=0)),
-                ('activity_type', models.CharField(blank=True, max_length=255, null=True)),
+                ('activity_type', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='api_activity.activitytype'),
+),
             ],
             options={
                 'db_table': 'activity',
@@ -80,7 +109,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('is_active', models.BooleanField(default=True)),
-                ('activity_type', models.CharField(blank=True, max_length=255, null=True)),
+                ('activity_type', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='api_activity.activitytype')),
                 ('children', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='api_children.children')),
                 ('profile', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='api_user.profile')),
             ],

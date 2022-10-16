@@ -1,3 +1,48 @@
+class ActivityTypeData:
+    activity_type_group = [
+        {
+            "id": "167658c2c05c4aafbfadf39eb063ed2f",
+            "name": "Adopt Introduction Activity Group",
+        },
+        {
+            "id": "9a6fbc151cda4d93878596fe1515793d",
+            "name": "Event Activity Group"
+        },
+        {
+            "id": "080af6d1b8ec4deb980c548ba72cf1d2",
+            "name": "Other"
+        }
+    ]
+
+    activity_type = [
+        {
+            "id": "8e31798198624315b4a8daa9b8831ef2",
+            "name": "Event",
+            "activity_type_group": "9a6fbc151cda4d93878596fe1515793d"
+        },
+        {
+            "id": "7cf1907471bd45b19d64693d663bd22f",
+            "name": "Charity",
+            "activity_type_group": "9a6fbc151cda4d93878596fe1515793d"
+        },
+        {
+            "id": "4a3188695c5945e28af1e11d875d3d8e",
+            "name": "Adopt",
+            "activity_type_group": "167658c2c05c4aafbfadf39eb063ed2f"
+        },
+        {
+            "id": "15dc39c9a0f947f1bac0cf40a0abaf48",
+            "name": "Introduction",
+            "activity_type_group": "167658c2c05c4aafbfadf39eb063ed2f"
+        },
+        {
+            "id": "13687eff53004d73aa7096eb325dd175",
+            "name": "Donor",
+            "activity_type_group": "080af6d1b8ec4deb980c548ba72cf1d2"
+        },
+    ]
+
+
 class ActivityData:
     charity_activity = [
         {

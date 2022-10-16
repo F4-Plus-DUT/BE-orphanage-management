@@ -9,18 +9,21 @@ from utils.activity import read_content
 
 def init_data_activity(apps, schema_editor):
     activity_model = apps.get_model("api_activity", "Activity")
+    activity_type_model = apps.get_model("api_activity", "ActivityType")
+    charity_type = activity_type_model.objects.get(id='7cf1907471bd45b19d64693d663bd22f')
+    event_type = activity_type_model.objects.get(id='8e31798198624315b4a8daa9b8831ef2')
     charity_activity = [activity_model(title=charity['title'],
                                        content=read_content(charity['content']), location=charity['location'],
                                        start_date=charity['start_date'], end_date=charity['end_date'],
                                        cover_picture=charity['cover_picture'], expense=charity['expense'],
-                                       activity_type=ActivityType.CHARITY)
+                                       activity_type=charity_type)
                         for charity in ActivityData.charity_activity]
 
     event = [activity_model(title=event['title'],
                             content=read_content(event['content']), location=event['location'],
                             start_date=event['start_date'], end_date=event['end_date'],
                             cover_picture=event['cover_picture'], expense=event['expense'],
-                            activity_type=ActivityType.EVENT)
+                            activity_type=event_type)
              for event in ActivityData.event]
 
     activity_model.objects.bulk_create(charity_activity)
@@ -30,7 +33,7 @@ def init_data_activity(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api_activity', '0004_rename_description_activity_content'),
+        ('api_activity', '0008_migrate_activity_type'),
     ]
 
     operations = [
