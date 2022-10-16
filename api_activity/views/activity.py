@@ -33,6 +33,6 @@ class ActivityViewSet(BaseViewSet):
         if serializer.is_valid(raise_exception=True):
             with transaction.atomic():
                 serializer.save()
-                # ActivityService.send_notify(serializer)
+                ActivityService.send_notify(serializer.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return ErrorResponse(ErrorResponseType.CANT_CREATE, params=["activity"])

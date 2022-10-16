@@ -8,7 +8,6 @@ class AccountSerializer(ModelSerializer):
 
     class Meta:
         model = Account
-        fields = "__all__"
         exclude = ['password']
         ordering = ('created_at', 'updated_at')
 
@@ -20,5 +19,3 @@ class LoginAccountSerializer(ModelSerializer):
     class Meta:
         model = Account
         fields = ["email", "password"]
-        ordering = ('created_at', 'updated_at')
-
