@@ -15,7 +15,7 @@ class ActivityTypeViewSet(BaseViewSet):
     serializer_class = ActivityTypeSerializer
     pagination_class = None
     required_alternate_scopes = {
-        "list": ["activity:view_activity"],
+        "list": [],
     }
 
     def list(self, request, *args, **kwargs):

@@ -59,3 +59,10 @@ class RoleData(Enum):
         "scope_text": "",
         "description": "Employee of F4plus orphanage",
     }
+
+    ADOPT_MANAGER = {
+        "id": "cd3f70ce328a408b83ba205a331735eb",
+        "name": "Adopt Manager",
+        "scope_text": "adopt_request:view_adopt_request adopt_request:edit_adopt_request",
+        "description": "Management Adopt Request of F4plus orphanage",
+    }
