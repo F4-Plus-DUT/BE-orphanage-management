@@ -7,11 +7,13 @@ from rest_framework.response import Response
 
 from api_user.models import Account
 from api_user.serializers import AccountSerializer
-from api_user.services import ProfileService
+from api_user.services import ProfileService, AccountService
 from base.permission.permission import MyActionPermission
 from base.views import BaseViewSet
 from common.constants.base import HttpMethod
 from dotenv import load_dotenv
+
+from utils import gen_password
 
 load_dotenv()
 
@@ -49,8 +51,11 @@ class AccountViewSet(BaseViewSet):
     def reset_password(self, request, *args, **kwargs):
         instance = self.get_object()
         if instance:
-            instance.password = make_password(os.getenv('DEFAULT_PASSWORD'))
+            password = gen_password()
+            instance.password = make_password(password)
             instance.save()
+            AccountService.send_mail_reset_password(email=instance.email, password=password,
+                                                    send_email=True)
             return Response({"success": "Reset password!"}, status=status.HTTP_200_OK)
         return Response({"error_message": "Account id is not defined!"}, status=status.HTTP_400_BAD_REQUEST)
 

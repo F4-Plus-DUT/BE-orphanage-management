@@ -16,8 +16,8 @@ class ActivityViewSet(BaseViewSet):
     permission_classes = [MyActionPermission]
     serializer_class = ActivitySerializer
     required_alternate_scopes = {
-        "retrieve": ["activity:view_activity"],
-        "list": ["activity:view_activity"],
+        "retrieve": [],
+        "list": [],
         "create": ["activity:edit_activity"],
         "update": ["activity:edit_activity"],
     }
@@ -36,3 +36,16 @@ class ActivityViewSet(BaseViewSet):
                 ActivityService.send_notify(serializer.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return ErrorResponse(ErrorResponseType.CANT_CREATE, params=["activity"])
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=ActivityService.init_data_activity(request))
+        if serializer.is_valid(raise_exception=True):
+            with transaction.atomic():
+                self.perform_update(serializer)
+                if getattr(instance, "_prefetched_objects_cache", None):
+                    # If 'prefetch_related' has been applied to a queryset, we need to
+                    # forcibly invalidate the prefetch cache on the instance.
+                    instance._prefetched_objects_cache = {}
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return ErrorResponse(ErrorResponseType.CANT_UPDATE, params=["activity"])

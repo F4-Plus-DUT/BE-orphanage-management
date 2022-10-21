@@ -11,6 +11,6 @@ class ActivityTypeGroupViewSet(BaseViewSet):
     serializer_class = ActivityTypeGroupSerializer
     pagination_class = None
     required_alternate_scopes = {
-        "list": ["activity:view_activity"],
+        "list": [],
     }
 

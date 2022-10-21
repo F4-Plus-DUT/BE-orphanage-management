@@ -12,6 +12,8 @@ from base.services.send_mail import SendMail
 from django.template.loader import render_to_string
 from dotenv import load_dotenv
 
+from utils import gen_password
+
 load_dotenv()
 
 
@@ -57,12 +59,13 @@ class AccountService:
 
     @classmethod
     def invite(cls, email, name, base_link="{settings.UI_HOST}/verify"):
+        password = gen_password()
         account_data = dict(
             email=email,
-            password=os.getenv('DEFAULT_PASSWORD')
+            password=password
         )
         employee_role = Role.objects.by_id(RoleData.EMPLOYEE.value.get('id'))
-        cls.send_mail(email=email, name=name, send_email=True, base_link=base_link)
+        cls.send_mail(email=email, name=name, password=password, send_email=True, base_link=base_link)
         with transaction.atomic():
             user = cls.create(account_data, employee_role)
             profile = Profile.objects.create(
@@ -73,6 +76,29 @@ class AccountService:
         return {"success": True, "user": {"name": name, "email": email}}
 
     @classmethod
+    def send_mail_reset_password(
+            cls,
+            email=None,
+            phone=None,
+            personal_email=None,
+            send_email=False,
+            base_link="",
+            password="",
+    ):
+        if send_email:
+            token = TokenUtil.verification_encode(name, email, phone, personal_email)
+            # TODO: Look at the link again
+            link = f"{base_link}?token={token}"
+            content = render_to_string(
+                "reset_password.html",
+                {"email": email, "password": password, "link": link, "token": token},
+            )
+            SendMail.start(
+                [email, personal_email], "[RESET PASSWORD] New generator password for your account", content
+            )
+
+
+    @classmethod
     def send_mail(
             cls,
             email=None,
@@ -81,6 +107,7 @@ class AccountService:
             personal_email=None,
             send_email=False,
             base_link="",
+            password="",
     ):
         if send_email:
             token = TokenUtil.verification_encode(name, email, phone, personal_email)
@@ -88,7 +115,7 @@ class AccountService:
             link = f"{base_link}?token={token}"
             content = render_to_string(
                 "invite_email.html",
-                {"name": name, "email": email, "link": link, "token": token},
+                {"name": name, "email": email, "password": password, "link": link, "token": token},
             )
             SendMail.start(
                 [email, personal_email], "Welcome to Orphanage Management", content

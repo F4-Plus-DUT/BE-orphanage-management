@@ -7,6 +7,12 @@ from core.settings import SCOPES
 class MyActionPermission(BasePermission):
     def has_permission(self, request, view):
         token = request.auth
+        required_alternate_scopes = getattr(view, "required_alternate_scopes")
+        action = view.action.lower()
+
+        if action in required_alternate_scopes:
+            if len(required_alternate_scopes[action]) == 0:
+                return True
 
         if not token:
             return False
@@ -14,8 +20,6 @@ class MyActionPermission(BasePermission):
         user_roles = request.user.roles
         user_scopes = self.get_scopes_user_role(user_roles)
 
-        required_alternate_scopes = getattr(view, "required_alternate_scopes")
-        action = view.action.lower()
         if action in required_alternate_scopes:
             return any(
                 scope in user_scopes for scope in required_alternate_scopes[action]

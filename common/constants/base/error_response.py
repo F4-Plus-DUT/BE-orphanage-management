@@ -12,6 +12,8 @@ class ErrorResponseType(Enum):
     CANT_CREATE = (4004, "{0} can't be created")
     EMPTY = (4005, "{0} can't be empty")
     INVALID = (4005, "{0} is invalid")
+    CANT_UPDATE = (4006, "{0} can't be updated")
+    CANT_DELETE = (4006, "{0} can't be deleted")
 
     def __init__(self, code: int, error_message: str):
         self.code = code
