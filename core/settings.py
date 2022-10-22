@@ -33,7 +33,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '3f10-113-185-53-132.ap.ngrok.io', 'orphanage-management.azurewebsites.net']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '7c46-14-191-241-189.ap.ngrok.io', 'orphanage-management.azurewebsites.net']
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
