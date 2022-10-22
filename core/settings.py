@@ -14,6 +14,8 @@ from pathlib import Path
 import os
 from os.path import join, dirname
 import cloudinary
+import django_heroku
+# import dj_database_url
 
 from dotenv import load_dotenv
 from datetime import timedelta
@@ -28,12 +30,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+# SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = 'heheheehhehe'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '3f10-113-185-53-132.ap.ngrok.io', 'orphanage-management.azurewebsites.net']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '7c46-14-191-241-189.ap.ngrok.io', 'orphanage-management.azurewebsites.net', 'orphanage-management.herokuapp.com']
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
@@ -163,7 +166,6 @@ DATABASES = {
         'OPTIONS': {
             'charset': 'utf8mb4',
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            'ssl': {'ssl-ca': '/var/www/html/BaltimoreCyberTrustRoot.crt.pem'},
         }
     }
 }
@@ -205,6 +207,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+django_heroku.settings(locals())
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

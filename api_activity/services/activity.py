@@ -90,6 +90,7 @@ class ActivityService:
     @classmethod
     def get_filter_query(cls, request):
         activity_type = request.query_params.get("activity_type")
-
-        activity_type = activity_type if activity_type != 'all' else ''
+        query_set = Activity.objects.all()
+        if activity_type == 'all':
+            return query_set
         return Activity.objects.filter(activity_type__id=activity_type)
