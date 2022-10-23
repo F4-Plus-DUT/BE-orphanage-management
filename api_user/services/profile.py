@@ -1,3 +1,4 @@
+import os
 from typing import Optional
 
 from django.db import transaction
@@ -7,6 +8,7 @@ from django.db.models.functions import Collate
 from api_user.models import Profile
 from api_user.serializers import ProfileDetailSerializer
 from api_user.services import AccountService, TokenService
+from base.services import ImageService
 from core.settings import SCOPES
 
 
@@ -71,3 +73,15 @@ class ProfileService:
 
         queryset = queryset.filter(Q(name__icontains=name) | Q(personal_email__icontains=name))
         return queryset
+
+    @classmethod
+    def init_data_profile(cls, request, instance):
+        data = request.data.dict()
+        account = instance.account
+        if account:
+            avatar = request.FILES.get('avatar')
+            if avatar:
+                image_link = ImageService.upload_image(avatar, os.getenv('CLOUDINARY_AVATAR_FOLDER'))
+                account.avatar = image_link
+                account.save()
+        return data

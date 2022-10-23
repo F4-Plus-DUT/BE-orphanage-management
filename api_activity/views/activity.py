@@ -39,7 +39,7 @@ class ActivityViewSet(BaseViewSet):
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=ActivityService.init_data_activity(request))
+        serializer = self.get_serializer(instance, data=ActivityService.upload_image_data_activity(request))
         if serializer.is_valid(raise_exception=True):
             with transaction.atomic():
                 self.perform_update(serializer)

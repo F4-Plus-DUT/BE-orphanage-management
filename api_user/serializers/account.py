@@ -5,6 +5,7 @@ from api_user.models import Account
 
 
 class AccountSerializer(ModelSerializer):
+    email = serializers.EmailField(read_only=True, required=False)
 
     class Meta:
         model = Account

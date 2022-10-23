@@ -7,7 +7,7 @@ from django.db import transaction
 
 from api_user.models import Account, Role, Profile
 from api_user.statics import RoleData
-from base.services import TokenUtil
+from base.services import TokenUtil, ImageService
 from base.services.send_mail import SendMail
 from django.template.loader import render_to_string
 from dotenv import load_dotenv

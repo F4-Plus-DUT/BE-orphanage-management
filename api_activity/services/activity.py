@@ -24,6 +24,15 @@ class ActivityService:
         return data
 
     @classmethod
+    def upload_image_data_activity(cls, request):
+        data = request.data.dict()
+        personal_picture = request.FILES.get('cover_picture')
+        if personal_picture:
+            image_link = ImageService.upload_image(personal_picture, os.getenv('CLOUDINARY_ACTIVITY_FOLDER'))
+            data['cover_picture'] = image_link
+        return data
+
+    @classmethod
     def send_notify(cls, serializer, base_link="{settings.UI_HOST}"):
         vip_donor = Profile.objects.vip_donor()
         employee = Profile.objects.filter(account__roles__id=RoleData.EMPLOYEE.value.get('id'))
