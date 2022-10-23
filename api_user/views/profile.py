@@ -1,5 +1,3 @@
-import os
-
 from django.db import transaction
 from rest_framework import status
 from rest_framework.decorators import action
@@ -12,6 +10,7 @@ from api_user.statics import RoleData
 from base.permission.permission import MyActionPermission
 from base.views import BaseViewSet
 from common.constants.base import HttpMethod, ErrorResponse, ErrorResponseType
+from utils import gen_password
 
 
 class ProfileViewSet(BaseViewSet):
@@ -41,7 +40,7 @@ class ProfileViewSet(BaseViewSet):
     @action(methods=[HttpMethod.POST], detail=False)
     def create_employee(self, request, *args, **kwargs):
         data = request.data
-        data["password"] = os.getenv("DEFAULT_EMPLOYEE_PASSWORD")
+        data["password"] = gen_password()
         serializer = self.get_serializer(data=data)
         if serializer.is_valid(raise_exception=True):
             with transaction.atomic():
@@ -62,3 +61,17 @@ class ProfileViewSet(BaseViewSet):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Exception as e:
             ErrorResponse(ErrorResponseType.CANT_DEACTIVATE, params=["profile"])
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=ProfileService.init_data_profile(request, instance))
+        if serializer.is_valid(raise_exception=True):
+            with transaction.atomic():
+                self.perform_update(serializer)
+                if getattr(instance, "_prefetched_objects_cache", None):
+                    # If 'prefetch_related' has been applied to a queryset, we need to
+                    # forcibly invalidate the prefetch cache on the instance.
+                    instance._prefetched_objects_cache = {}
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return ErrorResponse(ErrorResponseType.CANT_UPDATE, params=["profile"])
+

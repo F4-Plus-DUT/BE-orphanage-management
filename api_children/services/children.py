@@ -46,3 +46,12 @@ class ChildrenService:
         else:
             data['personal_picture'] = ImageDefaultChildren.Female if gender == Gender.FEMALE else ImageDefaultChildren.Male
         return data
+
+    @classmethod
+    def upload_image_data_children(cls, request):
+        data = request.data.dict()
+        personal_picture = request.FILES.get('personal_picture')
+        if personal_picture:
+            image_link = ImageService.upload_image(personal_picture, os.getenv('CLOUDINARY_CHILDREN_FOLDER'))
+            data['personal_picture'] = image_link
+        return data

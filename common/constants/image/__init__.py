@@ -1,2 +1,2 @@
-from .children import ImageDefaultChildren
+from .children import ImageDefaultChildren, AvatarDefault
 from .activity import ImageDefaultActivity
