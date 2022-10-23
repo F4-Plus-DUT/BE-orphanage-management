@@ -27,7 +27,7 @@ class AccountViewSet(BaseViewSet):
         "list": ["user:view_ger_info"],
         "retrieve": ["user:view_ger_info"],
         "reset_password": ["admin:reset_password"],
-        "change_password": ["user:edit_pub_info"],
+        "change_password": ["user:edit_public_info"],
     }
 
     def list(self, request, *args, **kwargs):
@@ -44,7 +44,7 @@ class AccountViewSet(BaseViewSet):
         if check_password(old_password, account.password):
             account.password = make_password(new_password)
             account.save()
-            return Response({"detail": "Changed password!"}, status=status.HTTP_204_NO_CONTENT)
+            return Response({"success": "Changed password!"}, status=status.HTTP_204_NO_CONTENT)
         return Response({"error_message": "Old password is incorrect!"}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(methods=[HttpMethod.PUT], detail=True)
