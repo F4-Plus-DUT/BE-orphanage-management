@@ -28,7 +28,7 @@ class ProfileService:
             password = account.get('password', "")
             account_instance = AccountService.create(account, role)
             user_data['account'] = account_instance
-            user_data['personal_email'] = user_data.pop("email", None)
+            user_data['personal_email'] = account_instance.email
             user_data['is_vip_donor'] = user_data.pop("is_vip_donor", False)
             user = Profile(**user_data)
             user.save()
