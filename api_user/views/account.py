@@ -45,7 +45,7 @@ class AccountViewSet(BaseViewSet):
         if check_password(old_password, account.password):
             account.password = make_password(new_password)
             account.save()
-            return Response({"success": "Changed password!"}, status=status.HTTP_204_NO_CONTENT)
+            return Response({"success": "Changed password!"}, status=status.HTTP_200_OK)
         return Response({"error_message": "Old password is incorrect!"}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(methods=[HttpMethod.PUT], detail=True)
