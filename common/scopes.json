@@ -20,6 +20,7 @@
   "activity:view_activity": "View activity",
   "activity:edit_activity": "Edit activity",
   "activity:comment_activity": "Comment activity",
+  "activity:delete_all_comment": "Delete all comment",
   "activity:donate": "Donate",
   "adopt_request:view_adopt_request": "View adopt request",
   "adopt_request:create_adopt_request": "Register adopt children",
