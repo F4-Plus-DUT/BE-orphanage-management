@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.response import Response
 
 from api_activity.models import Activity
-from api_activity.serializers import ActivitySerializer
+from api_activity.serializers import ActivitySerializer, ActivityDetailSerializer
 from api_activity.services.activity import ActivityService
 from base.permission.permission import MyActionPermission
 from base.views import BaseViewSet
@@ -15,6 +15,9 @@ class ActivityViewSet(BaseViewSet):
     queryset = Activity.objects.all()
     permission_classes = [MyActionPermission]
     serializer_class = ActivitySerializer
+    serializer_map = {
+        "retrieve": ActivityDetailSerializer
+    }
     required_alternate_scopes = {
         "retrieve": [],
         "list": [],
