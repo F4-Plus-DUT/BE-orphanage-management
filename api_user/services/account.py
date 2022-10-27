@@ -7,7 +7,7 @@ from django.db import transaction
 
 from api_user.models import Account, Role, Profile
 from api_user.statics import RoleData
-from base.services import TokenUtil
+from base.services import TokenUtil, ImageService
 from base.services.send_mail import SendMail
 from django.template.loader import render_to_string
 from dotenv import load_dotenv
@@ -86,17 +86,14 @@ class AccountService:
             password="",
     ):
         if send_email:
-            token = TokenUtil.verification_encode(name, email, phone, personal_email)
-            # TODO: Look at the link again
-            link = f"{base_link}?token={token}"
+            link = f"{base_link}"
             content = render_to_string(
                 "reset_password.html",
-                {"email": email, "password": password, "link": link, "token": token},
+                {"email": email, "password": password, "link": link},
             )
             SendMail.start(
                 [email, personal_email], "[RESET PASSWORD] New generator password for your account", content
             )
-
 
     @classmethod
     def send_mail(

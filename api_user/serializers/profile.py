@@ -7,8 +7,9 @@ from api_user.models.profile import Profile
 
 
 class ProfileDetailSerializer(ModelSerializer):
-    roles = serializers.SerializerMethodField()
+    roles = serializers.SerializerMethodField(read_only=True, required=False)
     avatar = serializers.CharField(source='account.avatar', required=False, read_only=True)
+    name = serializers.CharField(required=False)
 
     class Meta:
         model = Profile

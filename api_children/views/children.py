@@ -39,7 +39,7 @@ class ChildrenViewSet(BaseViewSet):
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
-        serializer = self.get_serializer(instance, data=ChildrenService.init_data_children(request))
+        serializer = self.get_serializer(instance, data=ChildrenService.upload_image_data_children(request))
         if serializer.is_valid(raise_exception=True):
             with transaction.atomic():
                 self.perform_update(serializer)
