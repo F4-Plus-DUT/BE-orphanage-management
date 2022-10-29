@@ -23,6 +23,7 @@ class ActivityViewSet(BaseViewSet):
         "list": [],
         "create": ["activity:edit_activity"],
         "update": ["activity:edit_activity"],
+        "destroy": ["activity:edit_activity"],
     }
 
     def list(self, request, *args, **kwargs):
@@ -52,3 +53,11 @@ class ActivityViewSet(BaseViewSet):
                     instance._prefetched_objects_cache = {}
             return Response(serializer.data, status=status.HTTP_200_OK)
         return ErrorResponse(ErrorResponseType.CANT_UPDATE, params=["activity"])
+
+    def destroy(self, request, *args, **kwargs):
+        try:
+            instance = self.get_object()
+            self.perform_destroy(instance)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Exception as e:
+            ErrorResponse(ErrorResponseType.CANT_DEACTIVATE, params=["activity"])
