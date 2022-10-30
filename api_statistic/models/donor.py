@@ -7,7 +7,7 @@ from base.models import TimeStampedModel
 
 
 class Donor(TimeStampedModel):
-    donor_amount = models.FloatField(default=0)
+    amount = models.IntegerField(default=0)
     profile = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True)
     activity = models.ForeignKey(Activity, on_delete=models.SET_NULL, null=True, blank=True)
 
