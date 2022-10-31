@@ -12,16 +12,18 @@ class ActivitySerializer(ModelSerializer):
 
 
 class ActivityDetailSerializer(ModelSerializer):
-    comments = serializers.SerializerMethodField(read_only=True)
-
     class Meta:
         model = Activity
         fields = '__all__'
         ordering = ('created_at', 'updated_at')
 
-    def get_comments(self, obj):
-        from api_activity.serializers import CommentDetailSerializer
-        from api_activity.models import Comment
+    def to_representation(self, instance):
+        from api_statistic.models import Donor
 
-        queryset = Comment.objects.by_activity(obj.id)
-        return CommentDetailSerializer(queryset, many=True).data
+        ret = super().to_representation(instance)
+        total_donate = 0
+        queryset = Donor.objects.by_activity(instance.id)
+        for donate in queryset:
+            total_donate += donate.ammount or 0
+        ret["donate"] = total_donate
+        return ret

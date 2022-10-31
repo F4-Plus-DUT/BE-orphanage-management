@@ -10,7 +10,7 @@ class CommentDetailSerializer(ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('account', 'content', 'updated_at', 'content', 'parent')
+        fields = ('id', 'account', 'content', 'updated_at', 'content', 'parent')
         ordering = ('created_at', 'updated_at')
 
 

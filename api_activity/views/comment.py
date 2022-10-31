@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.response import Response
 
 from api_activity.models import Comment
-from api_activity.serializers import CommentSerializer
+from api_activity.serializers import CommentSerializer, CommentDetailSerializer
 from api_activity.services import CommentService
 from api_user.utils.scopes import is_valid_auth
 from base.permission.permission import MyActionPermission
@@ -16,6 +16,9 @@ class CommentViewSet(BaseViewSet):
     queryset = Comment.objects.all()
     permission_classes = [MyActionPermission]
     serializer_class = CommentSerializer
+    serializer_map = {
+        "list": CommentDetailSerializer
+    }
     pagination_class = None
     required_alternate_scopes = {
         "list": [],
