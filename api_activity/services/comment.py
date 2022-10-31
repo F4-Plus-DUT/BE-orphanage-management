@@ -7,6 +7,5 @@ class CommentService:
     def get_filter_query(cls, request):
         activity = request.query_params.get("activity")
 
-        activity = activity if activity != 'all' else ''
-        return Comment.objects.filter(activity__id=activity)
-
+        activity = '' if activity == 'all' or activity == 'undefined' else activity
+        return Comment.objects.filter(activity=activity)

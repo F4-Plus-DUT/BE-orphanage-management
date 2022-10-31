@@ -5,6 +5,7 @@ from django.db import transaction
 from django.db.models import Value, Q
 from django.db.models.functions import Collate
 
+from api_statistic.models import Donor
 from api_user.models import Profile
 from api_user.serializers import ProfileDetailSerializer
 from api_user.services import AccountService, TokenService
@@ -85,3 +86,10 @@ class ProfileService:
                 account.avatar = image_link
                 account.save()
         return data
+
+    @classmethod
+    def update_vip_donor(cls, profile):
+        count_donor = Donor.objects.filter(profile=profile).count()
+        profile.is_vip_donor = True if count_donor >= 3 else profile.is_vip_donor
+        profile.save()
+        return profile

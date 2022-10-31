@@ -24,6 +24,7 @@ class ProfileViewSet(BaseViewSet):
     required_alternate_scopes = {
         "retrieve": ["user:view_ger_info"],
         "update": ["user:edit_private_info", "user:edit_public_inf", "employee:edit_employee_info"],
+        "remove_avatar": ["user:edit_private_info", "user:edit_public_inf", "employee:edit_employee_info"],
         "get_list_employee": ['employee:view_employee_info'],
         "create_employee": ["user:edit_private_info", "user:edit_public_inf", "employee:edit_employee_info"],
         "create": ["user:edit_private_info", "user:edit_public_inf", "employee:edit_employee_info"],
@@ -76,3 +77,13 @@ class ProfileViewSet(BaseViewSet):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return ErrorResponse(ErrorResponseType.CANT_UPDATE, params=["profile"])
 
+    @action(methods=[HttpMethod.DELETE], detail=True)
+    def remove_avatar(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance:
+            account = instance.account
+            account.avatar = None
+            account.save()
+            serializer = self.get_serializer(account.profile)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({"error_message": "Account id is not defined!"}, status=status.HTTP_400_BAD_REQUEST)
