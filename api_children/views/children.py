@@ -1,5 +1,6 @@
 from django.db import transaction
 from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from api_children.models import Children
@@ -7,7 +8,7 @@ from api_children.serializers import ChildrenSerializer
 from api_children.services import ChildrenService
 from base.permission.permission import MyActionPermission
 from base.views import BaseViewSet
-from common.constants.base import ErrorResponse, ErrorResponseType
+from common.constants.base import ErrorResponse, ErrorResponseType, HttpMethod
 
 
 class ChildrenViewSet(BaseViewSet):
@@ -49,3 +50,13 @@ class ChildrenViewSet(BaseViewSet):
                     instance._prefetched_objects_cache = {}
             return Response(serializer.data, status=status.HTTP_200_OK)
         return ErrorResponse(ErrorResponseType.CANT_UPDATE, params=["children"])
+
+    @action(methods=[HttpMethod.DELETE], detail=True)
+    def remove_photo(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance:
+            instance.personal_picture = None
+            instance.save()
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({"error_message": "Children id is not defined!"}, status=status.HTTP_400_BAD_REQUEST)
