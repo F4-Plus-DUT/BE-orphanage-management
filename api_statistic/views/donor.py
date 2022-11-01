@@ -32,14 +32,14 @@ class DonorViewSet(BaseViewSet):
 
     def create(self, request, *args, **kwargs):
         data = request.data
-        data['profile'] = None if request.user.is_anonymouse else request.user.profile.id
+        data['profile'] = None if request.user.is_anonymous else request.user.profile.id
         data['activity'] = None if data['activity'] == "" or data['activity'] == "undefined" else data['activity']
 
         serializer = self.get_serializer(data=data)
         if serializer.is_valid(raise_exception=True):
             with transaction.atomic():
                 serializer.save()
-                if not request.user.is_anonymouse:
+                if not request.user.is_anonymous:
                     ProfileService.update_vip_donor(request.user.profile)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return ErrorResponse(ErrorResponseType.CANT_CREATE, params=["donor"])
