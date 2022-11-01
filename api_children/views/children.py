@@ -17,11 +17,12 @@ class ChildrenViewSet(BaseViewSet):
     permission_classes = [MyActionPermission]
     serializer_class = ChildrenSerializer
     required_alternate_scopes = {
-        "retrieve": ["children:view_children_info"],
-        "list": ["children:view_children_info"],
+        "list": [],
+        "retrieve": [],
         "update": ["children:edit_children_info"],
-        "create": ["children:view_children_info"],
-        "destroy": ["children:view_children_info"],
+        "create": ["children:edit_children_info"],
+        "destroy": ["children:edit_children_info"],
+        "remove_photo": ["children:edit_children_info"],
     }
 
     def list(self, request, *args, **kwargs):
