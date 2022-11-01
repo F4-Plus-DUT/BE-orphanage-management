@@ -4,7 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from api_user.models.profile import Profile
-from api_user.serializers import ProfileDetailSerializer, ProfileSerializer
+from api_user.serializers import ProfileDetailSerializer, EmployeeSerializer
 from api_user.services import ProfileService, RoleService
 from api_user.statics import RoleData
 from base.permission.permission import MyActionPermission
@@ -19,15 +19,15 @@ class ProfileViewSet(BaseViewSet):
     serializer_class = ProfileDetailSerializer
     permission_classes = [MyActionPermission]
     serializer_map = {
-        "create_employee": ProfileSerializer,
+        "create_employee": EmployeeSerializer,
     }
     required_alternate_scopes = {
         "retrieve": ["user:view_ger_info"],
         "update": ["user:edit_private_info", "user:edit_public_inf", "employee:edit_employee_info"],
         "remove_avatar": ["user:edit_private_info", "user:edit_public_inf", "employee:edit_employee_info"],
         "get_list_employee": ['employee:view_employee_info'],
-        "create_employee": ["user:edit_private_info", "user:edit_public_inf", "employee:edit_employee_info"],
-        "create": ["user:edit_private_info", "user:edit_public_inf", "employee:edit_employee_info"],
+        "create_employee": ["admin:invite_user"],
+        "create": ["None"],
         "destroy": ["user:edit_private_info", "user:edit_public_inf", "employee:edit_employee_info"],
     }
 
@@ -43,12 +43,14 @@ class ProfileViewSet(BaseViewSet):
     def create_employee(self, request, *args, **kwargs):
         data = request.data
         data["password"] = gen_password()
+        data["occupation"] = "EMPLOYEE OF F4PLUS ORPHANAGE"
         serializer = self.get_serializer(data=data)
         if serializer.is_valid(raise_exception=True):
             with transaction.atomic():
                 user = ProfileService.create_profile(
                     RoleService.get_role_employee(), serializer.validated_data)
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
+                res_data = ProfileDetailSerializer(user).data
+                return Response(res_data, status=status.HTTP_201_CREATED)
         return ErrorResponse(ErrorResponseType.CANT_CREATE, params=["profile"])
 
     def destroy(self, request, *args, **kwargs):

@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.response import Response
 
 from api_statistic.models import Donor
-from api_statistic.serializers import DonorSerializer
+from api_statistic.serializers import DonorSerializer, DonorSortSerializer
 from api_statistic.services import DonorService
 from api_user.services import ProfileService
 from base.permission.permission import MyActionPermission
@@ -16,6 +16,9 @@ class DonorViewSet(BaseViewSet):
     queryset = Donor.objects.all()
     permission_classes = [MyActionPermission]
     serializer_class = DonorSerializer
+    serializer_map = {
+        "list": DonorSortSerializer
+    }
     required_alternate_scopes = {
         "retrieve": ["statistic:view_statistic"],
         "list": [],
