@@ -56,3 +56,12 @@ class EmployeeSerializer(ModelSerializer):
         model = Profile
         fields = ('id', 'name', 'gender', 'occupation', 'address', 'phone', 'email', 'password', 'avatar')
         ordering = ('created_at', 'updated_at')
+
+
+class AdopterSerializer(ModelSerializer):
+    email = serializers.EmailField(source='account.email')
+
+    class Meta:
+        model = Profile
+        fields = ('id', 'name', 'gender', 'occupation', 'address', 'phone', 'email')
+        ordering = ('created_at', 'updated_at')
