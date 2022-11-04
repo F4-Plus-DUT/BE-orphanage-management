@@ -5,6 +5,7 @@ from django.db.models.functions import Collate
 
 from api_children.models import Children
 from base.services import ImageService
+from common.constants.api_children import ChildrenStatus
 from common.constants.base import Gender
 from common.constants.image import ImageDefaultChildren
 
@@ -55,3 +56,9 @@ class ChildrenService:
             image_link = ImageService.upload_image(personal_picture, os.getenv('CLOUDINARY_CHILDREN_FOLDER'))
             data['personal_picture'] = image_link
         return data
+
+    @classmethod
+    def update_children_status(cls, children, status):
+        children.status = status
+        children.save()
+        return children

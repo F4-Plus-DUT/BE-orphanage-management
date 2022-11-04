@@ -1,6 +1,8 @@
 from .activity_type_group import ActivityTypeGroupSerializer
 from .activity_type import ActivityTypeSerializer
 from .activity import ActivitySerializer, ActivityDetailSerializer
+from .proof import ProofSerializer
+from .adopt_request_detail import AdoptRequestDetailSerializer, RegisterAdoptRequestDetailSerializer
 from .adopt_request import AdoptRequestSerializer, RegisterAdoptRequestSerializer
 from .comment import CommentSerializer, CommentDetailSerializer
 
