@@ -60,11 +60,57 @@ class AdoptRequestService:
         elif action in [AdoptRequestStatus.REJECT, AdoptRequestStatus.CANCEL]:
             adopt_request = cls.update_request(adopt_request, approver, action)
             ChildrenService.update_children_status(adopt_request.children, ChildrenStatus.UNADOPTED)
+        adopter = adopt_request.adopt_request_detail.adopter
+        personal_email = adopter.personal_email if (not adopter.account) or adopter.personal_email != adopter.account.email else None
+        cls.action_send_mail(email=adopter.account.email,
+                             name=adopter.name,
+                             personal_email=personal_email,
+                             send_email=True,
+                             base_link="",
+                             action=action,
+                             approve_name=adopt_request.approver.name,
+                             children_name=adopt_request.children.name
+                             )
         return adopt_request
+
+    @classmethod
+    def action_send_mail(
+            cls,
+            email=None,
+            name=None,
+            phone=None,
+            personal_email=None,
+            send_email=False,
+            action="",
+            approve_name="",
+            children_name="",
+            base_link="",
+    ):
+        if send_email:
+            # token = TokenUtil.verification_encode(name, email, phone, personal_email)
+            # TODO: Look at the link again
+            link = f"{base_link}?token="
+            content = render_to_string(
+                "action_adopt_request.html",
+                {"name": name, "approve_name": approve_name, "action": action, "children_name": children_name, "token": ""},
+            )
+            SendMail.start(
+                [email, personal_email], "[" + action + " Adopt Request]", content
+            )
 
     @classmethod
     def update_request(cls, adopt_request, approver, action):
         adopt_request.approver = approver
-        adopt_request.action = action
+        adopt_request.status = action
         adopt_request.save()
         return adopt_request
+
+    @classmethod
+    def check_action_request(cls, adopt_request, action):
+        action_list = [AdoptRequestStatus.PENDING, AdoptRequestStatus.REJECT, AdoptRequestStatus.CANCEL,
+                       AdoptRequestStatus.CANCELING, AdoptRequestStatus.APPROVE]
+        if adopt_request.status in [AdoptRequestStatus.CANCEL, AdoptRequestStatus.REJECT]:
+            return False
+        elif adopt_request.status == AdoptRequestStatus.APPROVE:
+            return False if action == AdoptRequestStatus.APPROVE or action == AdoptRequestStatus.REJECT else True
+        return True if action_list in action_list else False

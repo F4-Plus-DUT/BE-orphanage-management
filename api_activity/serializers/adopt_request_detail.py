@@ -27,4 +27,3 @@ class AdoptRequestDetailSerializer(ModelSerializer):
         queryset = Proof.objects.filter(adopt_request_detail__id=instance.id)
         ret["proof"] = ProofSerializer(queryset, many=True).data
         return ret
-

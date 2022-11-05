@@ -35,9 +35,10 @@ class AdoptRequestViewSet(BaseViewSet):
     @action(methods=[HttpMethod.PUT], detail=True)
     def do_action(self, request, *args, **kwargs):
         instance = self.get_object()
+        action_request = request.query_params.get("action")
+        # if instance and AdoptRequestService.check_action_request(instance, action_request):
         if instance:
             approver = request.user.profile
-            action_request = request.query_params.get("action")
-            res_data = AdoptRequestService.do_action(instance, approver, action_request)
-            return Response(res_data, status=status.HTTP_201_CREATED)
-        return ErrorResponse(ErrorResponseType.CANT_CREATE, params=["adopt_request"])
+            res_data = self.get_serializer(AdoptRequestService.do_action(instance, approver, action_request)).data
+            return Response(res_data, status=status.HTTP_200_OK)
+        return ErrorResponse(ErrorResponseType.CANT_UPDATE, params=["adopt_request"])

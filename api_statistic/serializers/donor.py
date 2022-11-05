@@ -6,7 +6,7 @@ from api_statistic.models import Donor
 class DonorSortSerializer(ModelSerializer):
     class Meta:
         model = Donor
-        fields = ('id', 'amount', 'created_at')
+        fields = ('id', 'amount', 'created_at', 'note')
         ordering = ('created_at', 'updated_at')
 
     def to_representation(self, instance):
