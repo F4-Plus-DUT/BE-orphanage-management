@@ -1,4 +1,3 @@
-from django.db import transaction
 from django.template.loader import render_to_string
 
 from api_activity.models import Activity
