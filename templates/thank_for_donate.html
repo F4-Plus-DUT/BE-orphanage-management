@@ -153,8 +153,10 @@
                     </p>
                     <p>Check for your donate:</p>
                     <ul>
+                        {% if activity_name != "" %}
                         <li>Activity:  {{ activity_name }} </li>
-                        <li>Donate: {{ children_name }} .000 VND </li>
+                        {% endif %}
+                        <li>Donate: {{ amount }} .000 VND </li>
                         <li>Note: {{ note }} </li>
                     </ul>
                   </td>
