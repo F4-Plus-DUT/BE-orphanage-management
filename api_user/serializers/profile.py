@@ -20,7 +20,7 @@ class ProfileDetailSerializer(ModelSerializer):
     def get_roles(self, obj):
         if obj.account:
             role = obj.account.roles.all().first()
-            return {"id": role.id, "name": role.name}
+            return {"id": role.id, "name": role.name, "levels": role.levels}
         return {}
 
 
