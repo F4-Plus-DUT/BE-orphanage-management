@@ -22,6 +22,7 @@ class ChildrenViewSet(BaseViewSet):
         "update": ["children:edit_children_info"],
         "create": ["children:edit_children_info"],
         "destroy": ["children:edit_children_info"],
+        "destroy_multi": ["children:edit_children_info"],
         "remove_photo": ["children:edit_children_info"],
     }
 
@@ -61,3 +62,12 @@ class ChildrenViewSet(BaseViewSet):
             serializer = self.get_serializer(instance)
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response({"error_message": "Children id is not defined!"}, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(methods=[HttpMethod.DELETE], detail=False)
+    def destroy_multi(self, request, *args, **kwargs):
+        children_ids = request.data.get("children_ids")
+        if children_ids:
+            is_deleted = ChildrenService.destroy_multi_children(children_ids)
+            if is_deleted:
+                return Response(status=status.HTTP_204_NO_CONTENT)
+            return ErrorResponse(ErrorResponseType.CANT_DELETE, params=["children"])

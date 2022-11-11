@@ -1,5 +1,7 @@
 import os
+from typing import List
 
+from django.db import transaction
 from django.db.models import Value
 from django.db.models.functions import Collate
 
@@ -62,3 +64,13 @@ class ChildrenService:
         children.status = status
         children.save()
         return children
+
+    @classmethod
+    def destroy_multi_children(cls, children_ids: List[str]) -> bool:
+        try:
+            with transaction.atomic():
+                bonus_leaves = Children.objects.filter(id__in=children_ids)
+                bonus_leaves.delete()
+            return True
+        except Exception as e:
+            return False
