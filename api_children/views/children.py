@@ -63,7 +63,7 @@ class ChildrenViewSet(BaseViewSet):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response({"error_message": "Children id is not defined!"}, status=status.HTTP_400_BAD_REQUEST)
 
-    @action(methods=[HttpMethod.DELETE], detail=False)
+    @action(methods=[HttpMethod.POST], detail=False)
     def destroy_multi(self, request, *args, **kwargs):
         children_ids = request.data.get("children_ids")
         if children_ids:
