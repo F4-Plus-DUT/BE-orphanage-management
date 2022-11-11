@@ -44,7 +44,7 @@ class DonorViewSet(BaseViewSet):
             with transaction.atomic():
                 serializer.save()
                 DonorService.send_mail_to_donor(serializer, email)
-                if not request.user.is_anonymous:
-                    ProfileService.update_vip_donor(request.user.profile)
+            if not request.user.is_anonymous:
+                ProfileService.update_vip_donor(request.user.profile.id)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return ErrorResponse(ErrorResponseType.CANT_CREATE, params=["donor"])

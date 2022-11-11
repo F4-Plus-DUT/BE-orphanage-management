@@ -88,7 +88,8 @@ class ProfileService:
         return data
 
     @classmethod
-    def update_vip_donor(cls, profile):
+    def update_vip_donor(cls, profile_id):
+        profile = Profile.objects.filter(id=profile_id).first()
         count_donor = Donor.objects.filter(profile=profile).count()
         profile.is_vip_donor = True if count_donor >= 3 else profile.is_vip_donor
         profile.save()
