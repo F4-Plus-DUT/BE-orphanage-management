@@ -23,5 +23,5 @@ class AdoptRequestSerializer(ModelSerializer):
     def to_representation(self, instance):
         ret = super().to_representation(instance)
         ret["adopter_name"] = instance.adopt_request_detail.adopter.name
-        ret["approver"] = instance.approver.name
+        ret["approver"] = instance.approver.name if instance.approver else None
         return ret

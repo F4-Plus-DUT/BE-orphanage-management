@@ -4,7 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from api_activity.models import AdoptRequest
-from api_activity.serializers import AdoptRequestSerializer
+from api_activity.serializers import AdoptRequestSerializer, RegisterAdoptRequestSerializer
 from api_activity.services import AdoptRequestService
 from base.permission.permission import MyActionPermission
 from base.views import BaseViewSet
@@ -30,12 +30,14 @@ class AdoptRequestViewSet(BaseViewSet):
         return self.get_paginated_response(data)
 
     def create(self, request, *args, **kwargs):
-        serializer = AdoptRequestSerializer(data=request.data)
+        serializer = RegisterAdoptRequestSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             with transaction.atomic():
                 serializer.save()
+                instance = AdoptRequest.objects.filter(adopt_request_detail=serializer.data.get('adopt_request_detail')).first()
+                res_data = AdoptRequestSerializer(instance).data
                 AdoptRequestService.send_notify(serializer)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(res_data, status=status.HTTP_201_CREATED)
         return ErrorResponse(ErrorResponseType.CANT_CREATE, params=["adopt_request"])
 
     @action(methods=[HttpMethod.PUT], detail=True)
