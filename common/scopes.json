@@ -24,5 +24,6 @@
   "activity:donate": "Donate",
   "adopt_request:view_adopt_request": "View adopt request",
   "adopt_request:create_adopt_request": "Register adopt children",
-  "adopt_request:edit_adopt_request": "Approve adopt request children"
+  "adopt_request:edit_adopt_request": "Approve adopt request children",
+  "statistic:view_statistic": "View statistic"
 }

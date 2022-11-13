@@ -1,6 +1,6 @@
 from django.template.loader import render_to_string
 
-from api_activity.models import AdoptRequestDetail
+from api_activity.models import AdoptRequestDetail, AdoptRequest
 from api_children.models import Children
 from api_children.services import ChildrenService
 from api_user.models import Profile
@@ -114,3 +114,12 @@ class AdoptRequestService:
         elif adopt_request.status == AdoptRequestStatus.APPROVE:
             return False if action == AdoptRequestStatus.APPROVE or action == AdoptRequestStatus.REJECT else True
         return True if action_list in action_list else False
+
+    @classmethod
+    def get_filter_query(cls, request):
+        status = request.query_params.get("status")
+        implement_status = [AdoptRequestStatus.REJECT, AdoptRequestStatus.CANCEL, AdoptRequestStatus.APPROVE]
+        query_set = AdoptRequest.objects.all()
+        if status == AdoptRequestStatus.PENDING:
+            return query_set.filter(status=AdoptRequestStatus.PENDING)
+        return query_set.filter(status__in=implement_status)

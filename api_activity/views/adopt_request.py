@@ -23,6 +23,12 @@ class AdoptRequestViewSet(BaseViewSet):
         "update": ["adopt_request:update_adopt_request"],
     }
 
+    def list(self, request, *args, **kwargs):
+        queryset = AdoptRequestService.get_filter_query(request)
+        page = self.paginate_queryset(queryset)
+        data = self.get_serializer(page, many=True).data
+        return self.get_paginated_response(data)
+
     def create(self, request, *args, **kwargs):
         serializer = AdoptRequestSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
