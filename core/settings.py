@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 from os.path import join, dirname
 import cloudinary
-import django_heroku
+# import django_eroku
 # import dj_database_url
 
 from dotenv import load_dotenv
@@ -207,7 +207,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

@@ -118,8 +118,10 @@ class AdoptRequestService:
     @classmethod
     def get_filter_query(cls, request):
         status = request.query_params.get("status")
-        implement_status = [AdoptRequestStatus.REJECT, AdoptRequestStatus.CANCEL, AdoptRequestStatus.APPROVE]
+        inactive_status = [AdoptRequestStatus.REJECT, AdoptRequestStatus.CANCEL]
         query_set = AdoptRequest.objects.all()
         if status == AdoptRequestStatus.PENDING:
             return query_set.filter(status=AdoptRequestStatus.PENDING)
-        return query_set.filter(status__in=implement_status)
+        if status == AdoptRequestStatus.APPROVE:
+            return query_set.filter(status=AdoptRequestStatus.APPROVE)
+        return query_set.filter(status__in=inactive_status)

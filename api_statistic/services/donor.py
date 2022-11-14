@@ -1,12 +1,26 @@
+from django.db.models import Sum
 from django.template.loader import render_to_string
 
 from api_activity.models import Activity
 from api_statistic.models import Donor
 from api_user.models import Profile
 from base.services.send_mail import SendMail
+from datetime import datetime, timedelta
+import time
 
 
 class DonorService:
+    @classmethod
+    def get_donate_statistics(cls, start_date, end_date):
+        donates = Donor.objects.filter(created_at__date__range=[start_date, end_date]).aggregate(
+                                        total_donate=Sum("amount"))
+        activities = Activity.objects.filter(created_at__date__range=[start_date, end_date]).aggregate(
+                                            total_expense=Sum("expense"))
+
+        response = {**donates, **activities}
+        return response
+        return {"error_message": "no statistic"}
+
     @classmethod
     def get_filter_query(cls, request):
         activity = request.query_params.get("activity")
