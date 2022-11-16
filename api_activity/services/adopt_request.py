@@ -125,3 +125,16 @@ class AdoptRequestService:
         if status == AdoptRequestStatus.APPROVE:
             return query_set.filter(status=AdoptRequestStatus.APPROVE)
         return query_set.filter(status__in=inactive_status)
+
+    @classmethod
+    def get_total_request(cls):
+        query_set = AdoptRequest.objects.all()
+        inactive_status = [AdoptRequestStatus.REJECT, AdoptRequestStatus.CANCEL]
+        active = query_set.filter(status=AdoptRequestStatus.APPROVE).count()
+        inactive = query_set.filter(status__in=inactive_status).count()
+        pending = query_set.filter(status=AdoptRequestStatus.PENDING).count()
+        return {
+            "active": active,
+            "inactive": inactive,
+            "pending": pending
+        }

@@ -21,6 +21,7 @@ class AdoptRequestViewSet(BaseViewSet):
         "list": ["adopt_request:view_adopt_request"],
         "create": ["adopt_request:create_adopt_request"],
         "update": ["adopt_request:update_adopt_request"],
+        "get_total_request": ["adopt_request:view_adopt_request"],
     }
 
     def list(self, request, *args, **kwargs):
@@ -50,3 +51,11 @@ class AdoptRequestViewSet(BaseViewSet):
             res_data = self.get_serializer(AdoptRequestService.do_action(instance, approver, action_request)).data
             return Response(res_data, status=status.HTTP_200_OK)
         return ErrorResponse(ErrorResponseType.CANT_UPDATE, params=["adopt_request"])
+
+    @action(methods=[HttpMethod.GET], detail=False)
+    def get_total_request(self, request, *args, **kwargs):
+        try:
+            res_data = AdoptRequestService.get_total_request()
+            return Response(res_data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return ErrorResponse(ErrorResponseType.EXCEPTION_ERROR, params=["adopt_request"])
