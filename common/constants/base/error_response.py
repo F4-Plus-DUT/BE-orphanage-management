@@ -14,6 +14,7 @@ class ErrorResponseType(Enum):
     INVALID = (4005, "{0} is invalid")
     CANT_UPDATE = (4006, "{0} can't be updated")
     CANT_DELETE = (4006, "{0} can't be deleted")
+    EXCEPTION_ERROR = (40087, "{0} has raise exception")
 
     def __init__(self, code: int, error_message: str):
         self.code = code
