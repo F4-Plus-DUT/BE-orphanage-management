@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from django.db.models import Sum
 from django.template.loader import render_to_string
 
@@ -5,8 +6,6 @@ from api_activity.models import Activity
 from api_statistic.models import Donor
 from api_user.models import Profile
 from base.services.send_mail import SendMail
-from datetime import datetime, timedelta
-import time
 
 
 class DonorService:
@@ -16,10 +15,31 @@ class DonorService:
                                         total_donate=Sum("amount"))
         activities = Activity.objects.filter(created_at__date__range=[start_date, end_date]).aggregate(
                                             total_expense=Sum("expense"))
+        total_donate = donates['total_donate'] or 0
+        total_expense = activities['total_expense'] or 0
+        date_statistic = []
 
-        response = {**donates, **activities}
+        date_start = datetime.strptime(start_date, '%Y-%m-%d').date()
+        date_end = datetime.strptime(end_date, '%Y-%m-%d').date()
+        date = date_start
+        while date <= date_end:
+            donor = Donor.objects.filter(created_at__date=date).aggregate(
+                                        donate=Sum("amount"))
+            expense = Activity.objects.filter(created_at__date=date).aggregate(
+                expense=Sum("expense"))
+            date_statistic.append({
+                "day": date,
+                "donate": donor['donate'] or 0,
+                "expense": expense['expense'] or 0
+            })
+            date = date + timedelta(days=1)
+
+        response = {
+            "total_donate": total_donate,
+            "total_expense": total_expense,
+            "details": date_statistic,
+        }
         return response
-        return {"error_message": "no statistic"}
 
     @classmethod
     def get_filter_query(cls, request):
