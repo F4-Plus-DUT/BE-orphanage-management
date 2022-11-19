@@ -17,3 +17,5 @@ pandas
 whitenoise
 gunicorn
 django_heroku
+#test
+pytest
