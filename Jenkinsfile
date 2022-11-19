@@ -11,7 +11,6 @@ pipeline {
                 script {
                     try {
                         sh "mv .env-jenkins .env"
-                        echo "Hello"
                     }
                     catch (err) {
                         echo err.getMessage()
@@ -26,7 +25,8 @@ pipeline {
             steps {
                 script {
                     try {
-                        sh "docker rm orp-container-web-1 -f"
+                        sh "docker rm orp-container-test-web-1 -f"
+                        sh "docker rmi orp-container-test-web -f"
                         sh 'docker rm /$(docker ps --filter status=exited -q)'
                     }
                     catch (err) {
