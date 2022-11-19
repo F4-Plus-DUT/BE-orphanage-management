@@ -36,7 +36,7 @@ SECRET_KEY = 'heheheehhehe'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '7c46-14-191-241-189.ap.ngrok.io', 'orphanage-management.azurewebsites.net', 'orphanage-management.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '7c46-14-191-241-189.ap.ngrok.io', 'orphanage-management.azurewebsites.net', 'orphanage-management.herokuapp.com', '146.190.88.115']
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
