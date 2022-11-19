@@ -12,6 +12,7 @@ class DonorSortSerializer(ModelSerializer):
     def to_representation(self, instance):
         ret = super().to_representation(instance)
         ret["donor"] = instance.profile.name if instance.profile else "Ẩn Danh"
+        ret["activity"] = instance.activity.title if instance.activity else "Ủng hộ trung tâm"
         return ret
 
 
