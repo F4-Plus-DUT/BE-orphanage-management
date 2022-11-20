@@ -29,6 +29,7 @@ class DonorViewSet(BaseViewSet):
         "create": [],
         "destroy": ["None"],
         "get_donate_statistics": ["statistic:view_statistic"],
+        "get_box_dashboard": ["statistic:view_statistic"],
     }
 
     def list(self, request, *args, **kwargs):
@@ -72,3 +73,8 @@ class DonorViewSet(BaseViewSet):
 
         donate_statistics = DonorService.get_donate_statistics(start_date, end_date)
         return Response(donate_statistics)
+
+    @action(methods=[HttpMethod.GET], detail=False)
+    def get_box_dashboard(self, request, *args, **kwargs):
+        res = DonorService.get_box_dashboard()
+        return Response(res)

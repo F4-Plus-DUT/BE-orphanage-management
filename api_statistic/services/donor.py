@@ -3,12 +3,28 @@ from django.db.models import Sum
 from django.template.loader import render_to_string
 
 from api_activity.models import Activity
+from api_children.models import Children
 from api_statistic.models import Donor
-from api_user.models import Profile
+from api_user.models import Profile, Account
+from api_user.statics import RoleData
 from base.services.send_mail import SendMail
 
 
 class DonorService:
+    @classmethod
+    def get_box_dashboard(cls):
+        children = Children.objects.all().count()
+        employee = Account.objects.filter(roles__in=[RoleData.EMPLOYEE.value.get('id')]).count()
+        customer = Account.objects.filter(roles__in=[RoleData.CUSTOMER.value.get('id')]).count()
+        donor = Donor.objects.all().count()
+
+        return {
+            "children": children,
+            "employee": employee,
+            "donate": donor,
+            "customer": customer
+        }
+
     @classmethod
     def get_donate_statistics(cls, start_date, end_date):
         donates = Donor.objects.filter(created_at__date__range=[start_date, end_date]).aggregate(
