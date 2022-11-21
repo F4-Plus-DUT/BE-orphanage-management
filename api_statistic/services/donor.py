@@ -17,13 +17,25 @@ class DonorService:
         employee = Account.objects.filter(roles__in=[RoleData.EMPLOYEE.value.get('id')]).count()
         customer = Account.objects.filter(roles__in=[RoleData.CUSTOMER.value.get('id')]).count()
         donor = Donor.objects.all().count()
+        res = [{"key": "child",
+                "title": "Trẻ em",
+                "value": children,
+                "rateString": "hiện tại"},
+               {"key": "employee",
+                "title": "Nhân viên",
+                "value": employee,
+                "rateString": "hiện tại"},
+               {"key": "donor",
+                "title": "Tổng số",
+                "value": donor,
+                "rateString": "lần ủng hộ"},
 
-        return {
-            "children": children,
-            "employee": employee,
-            "donate": donor,
-            "customer": customer
-        }
+               {"key": "customer",
+                "title": "Khách",
+                "value": customer,
+                "rateString": "hiện tại"}
+               ]
+        return res
 
     @classmethod
     def get_donate_statistics(cls, start_date, end_date):
