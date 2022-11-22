@@ -56,8 +56,11 @@ class DonorViewSet(BaseViewSet):
 
     @action(methods=[HttpMethod.GET], detail=False)
     def get_donate_statistics(self, request, *args, **kwargs):
-        start_date = request.query_params.get("start_date", "")
-        end_date = request.query_params.get("end_date", "")
+        start_date = request.query_params.get("start_date", None)
+        end_date = request.query_params.get("end_date", None)
+
+        if not start_date and not end_date:
+            return Response(DonorService.get_total_statistics())
 
         if not start_date or not end_date:
             return Response({"detail": "Not found start_date and end_date in url param"},
