@@ -50,11 +50,16 @@ class DonorService:
         return date_statistic
 
     @classmethod
-    def get_donate_statistics(cls, start_date, end_date):
+    def get_donate_statistics(cls, start_date, end_date, activity_type):
         donates = Donor.objects.filter(created_at__date__range=[start_date, end_date]).aggregate(
                                         total_donate=Sum("amount"))
-        activities = Activity.objects.filter(created_at__date__range=[start_date, end_date]).aggregate(
+
+        if activity_type != "all" and activity_type:
+            activities = Activity.objects.filter(activity_type=activity_type, created_at__date__range=[start_date, end_date]).aggregate(
                                             total_expense=Sum("expense"))
+        else:
+            activities = Activity.objects.filter(created_at__date__range=[start_date, end_date]).aggregate(
+                total_expense=Sum("expense"))
         total_donate = donates['total_donate'] or 0
         total_expense = int(activities['total_expense']) if activities['total_expense'] else 0
         date_statistic = []
