@@ -19,23 +19,35 @@ class DonorService:
         donor = Donor.objects.all().count()
         res = [{"key": "child",
                 "title": "Trẻ em",
+                "color": "#ffa39e",
                 "value": children,
                 "rateString": "hiện tại"},
                {"key": "employee",
                 "title": "Nhân viên",
+                "color": "#91caff",
                 "value": employee,
                 "rateString": "hiện tại"},
                {"key": "donor",
                 "title": "Tổng số",
+                "color": "#ff7a45",
                 "value": donor,
                 "rateString": "lần ủng hộ"},
-
                {"key": "customer",
                 "title": "Khách",
+                "color": "#135200",
                 "value": customer,
                 "rateString": "hiện tại"}
                ]
         return res
+
+    @classmethod
+    def get_total_statistics(cls):
+        donates = Donor.objects.all().aggregate(total_donate=Sum("amount"))
+        activities = Activity.objects.all().aggregate(total_expense=Sum("expense"))
+        donates['total_donate'] = donates['total_donate'] or 0
+        activities['total_expense'] = int(activities['total_expense']) if activities['total_expense'] else 0
+        date_statistic = {**donates, **activities}
+        return date_statistic
 
     @classmethod
     def get_donate_statistics(cls, start_date, end_date):
@@ -44,7 +56,7 @@ class DonorService:
         activities = Activity.objects.filter(created_at__date__range=[start_date, end_date]).aggregate(
                                             total_expense=Sum("expense"))
         total_donate = donates['total_donate'] or 0
-        total_expense = activities['total_expense'] or 0
+        total_expense = int(activities['total_expense']) if activities['total_expense'] else 0
         date_statistic = []
 
         date_start = datetime.strptime(start_date, '%Y-%m-%d').date()
@@ -58,13 +70,13 @@ class DonorService:
             date_statistic.append({
                 "day": date,
                 "donate": donor['donate'] or 0,
-                "expense": expense['expense'] or 0
+                "expense": int(expense['expense']) if expense['expense'] else 0
             })
             date = date + timedelta(days=1)
 
         response = {
             "total_donate": total_donate,
-            "total_expense": total_expense,
+            "total_expense": int(total_expense),
             "details": date_statistic,
         }
         return response
