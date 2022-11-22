@@ -58,6 +58,7 @@ class DonorViewSet(BaseViewSet):
     def get_donate_statistics(self, request, *args, **kwargs):
         start_date = request.query_params.get("start_date", None)
         end_date = request.query_params.get("end_date", None)
+        activity_type = request.query_params.get("activity_type", "")
 
         if not start_date and not end_date:
             return Response(DonorService.get_total_statistics())
@@ -74,7 +75,7 @@ class DonorViewSet(BaseViewSet):
         except ValueError:
             return Response({"detail": "Invalid start_date/end_date"}, status=status.HTTP_400_BAD_REQUEST)
 
-        donate_statistics = DonorService.get_donate_statistics(start_date, end_date)
+        donate_statistics = DonorService.get_donate_statistics(start_date, end_date, activity_type)
         return Response(donate_statistics)
 
     @action(methods=[HttpMethod.GET], detail=False)
