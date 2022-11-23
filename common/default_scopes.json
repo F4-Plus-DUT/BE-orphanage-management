@@ -7,5 +7,6 @@
   "activity:view_activity": "View activity",
   "activity:comment_activity": "Comment activity",
   "activity:donate": "Donate",
-  "adopt_request:create_adopt_request": "Register adopt children"
+  "adopt_request:create_adopt_request": "Register adopt children",
+  "statistic:view_statistic": "View statistic"
 }

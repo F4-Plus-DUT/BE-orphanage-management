@@ -16,8 +16,7 @@ class MyActionPermission(BasePermission):
 
         if not token:
             return False
-
-        user_roles = request.user.roles
+        user_roles = request.user.roles.all()
         user_scopes = self.get_scopes_user_role(user_roles)
 
         if action in required_alternate_scopes:
