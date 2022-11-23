@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 from os.path import join, dirname
 import cloudinary
-import django_heroku
+# import django_eroku
 # import dj_database_url
 
 from dotenv import load_dotenv
@@ -36,7 +36,7 @@ SECRET_KEY = 'heheheehhehe'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '7c46-14-191-241-189.ap.ngrok.io', 'orphanage-management.azurewebsites.net', 'orphanage-management.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '7c46-14-191-241-189.ap.ngrok.io', 'orphanage-management.azurewebsites.net', 'orphanage-management.herokuapp.com', '146.190.88.115']
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
@@ -207,7 +207,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

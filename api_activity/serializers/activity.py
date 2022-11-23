@@ -24,6 +24,6 @@ class ActivityDetailSerializer(ModelSerializer):
         total_donate = 0
         queryset = Donor.objects.by_activity(instance.id)
         for donate in queryset:
-            total_donate += donate.ammount or 0
+            total_donate += donate.amount or 0
         ret["donate"] = total_donate
         return ret

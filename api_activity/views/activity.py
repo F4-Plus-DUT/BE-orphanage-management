@@ -16,7 +16,8 @@ class ActivityViewSet(BaseViewSet):
     permission_classes = [MyActionPermission]
     serializer_class = ActivitySerializer
     serializer_map = {
-        "retrieve": ActivityDetailSerializer
+        "retrieve": ActivityDetailSerializer,
+        "list": ActivityDetailSerializer,
     }
     required_alternate_scopes = {
         "retrieve": [],

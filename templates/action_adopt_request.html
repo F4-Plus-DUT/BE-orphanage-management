@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+  </head>
+  <body
+    style="
+      background-color: #f3f5f7;
+      margin: 0 !important;
+      padding: 0 !important;
+    "
+    data-gr-c-s-loaded="true"
+  >
+    ​
+    <!-- HIDDEN PREHEADER TEXT -->
+    <div
+      style="
+        display: none;
+        font-size: 1px;
+        color: #fefefe;
+        line-height: 1px;
+        font-family: Avenir, sans-serif;
+        max-height: 0;
+        max-width: 0;
+        opacity: 0;
+        overflow: hidden;
+      "
+    >
+      We're thrilled to notify you for Your Adopt Request!
+    </div>
+    ​
+    <table style="border: 0; padding: 0; width: 100%; border-spacing: 0">
+      <!-- LOGO -->
+      <tbody>
+        <tr>
+          <td style="background-color: #1b3b5f; text-align: -webkit-center">
+            <table
+              style="
+                max-width: 600px;
+                border: 0;
+                padding: 0;
+                width: 100%;
+                border-spacing: 0;
+              "
+            >
+              <tbody>
+                <tr>
+                  <td
+                    style="
+                      padding: 30px 10px;
+                      text-align: -webkit-center;
+                      vertical-align: top;
+                    "
+                  >
+                    <a target="_blank" style="">
+                      <img
+                        src="https://i.imgur.com/2CXsFac.png"
+                        alt=""
+                        style="display: block; width: 113px; border: 0"
+                      />
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <!-- HERO -->
+        <tr>
+          <td
+            style="
+              padding: 0 10px;
+              background-color: #1b3b5f;
+              text-align: -webkit-center;
+            "
+          >
+            <table
+              style="
+                max-width: 600px;
+                border: 0;
+                padding: 0;
+                width: 100%;
+                border-spacing: 0;
+              "
+            >
+              <tbody>
+                <tr>
+                  <td
+                    style="
+                      background-color: white;
+                      text-align: -webkit-center;
+                      vertical-align: top;
+                      padding: 40px 20px 20px;
+                      border-radius: 4px 4px 0 0;
+                      color: rgb(17, 17, 17);
+                      font-family: Avenir Black, sans-serif;
+                      font-size: 48px;
+                      font-weight: 400;
+                      letter-spacing: 4px;
+                      line-height: 48px;
+                    "
+                  >
+                    <h1 style="font-size: 42px; font-weight: 400; margin: 0">
+                      Notice!
+                    </h1>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <!-- COPY BLOCK -->
+        <tr>
+          <td
+            style="
+              background-color: #f4f4f4;
+              text-align: -webkit-center;
+              padding: 0 10px;
+            "
+          >
+            <table
+              style="
+                max-width: 600px;
+                border: 0;
+                padding: 0;
+                width: 100%;
+                border-spacing: 0;
+              "
+            >
+              <!-- COPY -->
+              <tbody>
+                <tr>
+                  <td
+                    style="
+                      background-color: white;
+                      text-align: -webkit-left;
+                      padding: 20px 30px 40px;
+                      color: rgb(102, 102, 102);
+                      font-family: Avenir, sans-serif;
+                      font-size: 16px;
+                      font-weight: 400;
+                      line-height: 25px;
+                    "
+                  >
+                    <p style="margin: 0">Dear <b>{{ name }}</b>,</p>
+                    <p>
+                      We are pleased to announce you about your adopt-request. Adopt-request children of you was <b> {{ action }}</b>
+                        by our manager: <b> {{ approve_name }} </b>
+                    </p>
+                    <p>Detail your adopt-request:</p>
+                    <ul>
+                        <li>Adopter name:  {{ name }} </li>
+                        <li>Children name: {{ children_name }} </li>
+                    </ul>
+                  </td>
+                </tr>
+                {% if action|lower == "Approve"|lower %}
+                    <tr>
+                        <td style="background-color: white; text-align: -webkit-left; padding: 0 30px 20px 30px; color: #666666;
+                    font-family: Avenir, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
+                            <p style="margin: 0;">
+                                You have 15 days for going to office and adopt your children. If you don't do that, this
+                                request will be canceled. </p>
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if action|lower == "Reject"|lower or action|lower == "Cancel"|lower%}
+                    <tr>
+                        <td style="background-color: white; text-align: -webkit-left; padding: 0 30px 20px 30px; color: #666666;
+                    font-family: Avenir, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
+                            <p style="margin: 0;">
+                                Your register adopt children not qualified to adopt our child. For more details you can
+                                contact by reply email or offline in office. Thank for your request. Hope to cooperate
+                                with you in the future. </p>
+                        </td>
+                    </tr>
+                {% endif %}
+                <!-- COPY -->
+                <tr>
+                    <td style="background-color: white; text-align: -webkit-left; padding: 0 30px 20px 30px; color: #666666;
+                    font-family: Avenir, sans-serif; font-size: 16px; font-weight: 400; line-height: 25px;">
+                        <p style="margin: 0;">If you have any questions, just reply to this email. We're always happy to
+                            help out.</p>
+                    </td>
+                </tr>
+                <!-- COPY -->
+                <tr>
+                    <td style="background-color: white; text-align: -webkit-left;
+                    padding: 0 30px 40px 30px; border-radius: 0 0 4px 4px; color: #666666;
+                    font-family: Avenir, sans-serif; font-size: 14px; font-weight: 400; line-height: 25px;">
+                        <p style="margin: 0;">Best regard,<br>Orphanage Management Team</p>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <!-- SUPPORT CALLOUT -->
+        <tr>
+          <td
+            style="
+              padding: 30px 10px 0;
+              background-color: #f4f4f4;
+              text-align: -webkit-center;
+            "
+          >
+            <!-- FOOTER -->
+            <tr>
+              <td
+                style="
+                  padding: 0 10px;
+                  background-color: #f4f4f4;
+                  text-align: -webkit-center;
+                "
+              >
+                <table
+                  style="
+                    max-width: 600px;
+                    border: 0;
+                    padding: 0;
+                    width: 100%;
+                    border-spacing: 0;
+                  "
+                >
+                  <!-- NAVIGATION -->
+                  <tbody></tbody>
+                </table>
+              </td>
+            </tr>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
