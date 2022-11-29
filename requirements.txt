@@ -19,4 +19,8 @@ gunicorn
 django_heroku
 #test
 pytest
+elasticsearch
+elasticsearch-dsl
+python-logstash
+django-elasticsearch-dsl
 sentry-sdk==1.11.1
