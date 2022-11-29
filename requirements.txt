@@ -19,3 +19,7 @@ gunicorn
 django_heroku
 #test
 pytest
+elasticsearch
+elasticsearch-dsl
+python-logstash
+django-elasticsearch-dsl
