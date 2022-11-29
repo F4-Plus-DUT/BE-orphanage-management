@@ -19,3 +19,4 @@ gunicorn
 django_heroku
 #test
 pytest
+sentry-sdk==1.11.1
