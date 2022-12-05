@@ -60,7 +60,7 @@ class DonorService:
         else:
             activities = Activity.objects.filter(created_at__date__range=[start_date, end_date]).aggregate(
                 total_expense=Sum("expense"))
-        total_donate = donates['total_donate'] or 0
+        total_donate = int(donates['total_donate']) if donates['total_donate'] else 0
         total_expense = int(activities['total_expense']) if activities['total_expense'] else 0
         date_statistic = []
 
@@ -70,8 +70,12 @@ class DonorService:
         while date <= date_end:
             donor = Donor.objects.filter(created_at__date=date).aggregate(
                                         donate=Sum("amount"))
-            expense = Activity.objects.filter(created_at__date=date).aggregate(
-                expense=Sum("expense"))
+            if activity_type != "all" and activity_type:
+                expense = Activity.objects.filter(activity_type=activity_type, created_at__date=date).aggregate(
+                    expense=Sum("expense"))
+            else:
+                expense = Activity.objects.filter(created_at__date=date).aggregate(
+                    expense=Sum("expense"))
             date_statistic.append({
                 "day": date,
                 "donate": donor['donate'] or 0,
@@ -80,7 +84,7 @@ class DonorService:
             date = date + timedelta(days=1)
 
         response = {
-            "total_donate": total_donate,
+            "total_donate": int(total_donate),
             "total_expense": int(total_expense),
             "details": date_statistic,
         }

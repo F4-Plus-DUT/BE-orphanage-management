@@ -16,7 +16,8 @@ from os.path import join, dirname
 import cloudinary
 # import django_eroku
 # import dj_database_url
-
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 from dotenv import load_dotenv
 from datetime import timedelta
 from utils import read_scopes
@@ -36,7 +37,10 @@ SECRET_KEY = 'heheheehhehe'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '7c46-14-191-241-189.ap.ngrok.io', 'orphanage-management.azurewebsites.net', 'orphanage-management.herokuapp.com', '146.190.88.115']
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1', '7c46-14-191-241-189.ap.ngrok.io',
+#                  'orphanage-management.azurewebsites.net', 'orphanage-management.herokuapp.com', '146.190.88.115']
+ALLOWED_HOSTS = ['*']
+
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
@@ -48,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_elasticsearch_dsl',
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
@@ -71,6 +76,55 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'base.middleware.middleware.MyCustomMiddleWare'
 ]
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': '146.190.88.115:9200'
+    },
+}
+
+LOGGING = {
+  'version': 1,
+  'disable_existing_loggers': False,
+  'formatters': {
+      'simple': {
+            'format': 'velname)s %(message)s'
+        },
+  },
+  'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'logstash': {
+            'level': 'WARNING',
+            'class': 'logstash.TCPLogstashHandler',
+            'host': '146.190.88.115',
+            'port': 1309, # Default value: 5404
+            'version': 1, # Version of logstash event schema. Default value: 0 (for backward compatibility of the library)
+            'message_type': 'django',  # 'type' field in logstash message. Default value: 'logstash'.
+            'fqdn': False, # Fully qualified domain name. Default value: false.
+            'tags': ['django.request'], # list of tags. Default: None.
+        },
+  },
+  'loggers': {
+        'django.request': {
+            'handlers': ['logstash'],
+            'level': 'WARNING',
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['logstash'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'django': {
+            'handlers': ['console'],
+            'propagate': True,
+        },
+    }
+}
 
 ROOT_URLCONF = 'core.urls'
 
@@ -240,3 +294,21 @@ DEFAULT_EMAIL_ADMIN = os.getenv("DEFAULT_EMAIL_ADMIN")
 BLOCKED_EMAIL_DOMAINS = [
     "paradox.ai",
 ]
+
+
+# SENTRY
+sentry_sdk.init(
+    dsn="https://166b4c9326c444848da2dad3b9e87c66@o4504238108442624.ingest.sentry.io/4504240495591424",
+    integrations=[
+        DjangoIntegration(),
+    ],
+
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0,
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)

@@ -14,7 +14,7 @@ from base.views import BaseViewSet
 from common.constants.base import HttpMethod, ErrorResponse, ErrorResponseType
 from dotenv import load_dotenv
 
-from utils import gen_password
+from account_utils import gen_password
 
 load_dotenv()
 

@@ -9,7 +9,7 @@ from api_user.serializers.profile import ProfileSerializer
 from api_user.services import AccountService, TokenService, ProfileService, RoleService
 from common.constants.base import HttpMethod, ErrorResponse, ErrorResponseType
 from base.views import BaseViewSet
-from utils import gen_password
+from account_utils import gen_password
 
 
 class ActionViewSet(BaseViewSet):
