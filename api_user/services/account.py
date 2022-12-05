@@ -12,7 +12,7 @@ from base.services.send_mail import SendMail
 from django.template.loader import render_to_string
 from dotenv import load_dotenv
 
-from utils import gen_password
+from account_utils import gen_password
 
 load_dotenv()
 

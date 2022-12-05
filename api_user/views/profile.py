@@ -10,7 +10,7 @@ from api_user.statics import RoleData
 from base.permission.permission import MyActionPermission
 from base.views import BaseViewSet
 from common.constants.base import HttpMethod, ErrorResponse, ErrorResponseType
-from utils import gen_password
+from account_utils import gen_password
 
 
 class ProfileViewSet(BaseViewSet):
