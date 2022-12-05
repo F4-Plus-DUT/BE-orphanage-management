@@ -3,7 +3,6 @@
 from django.db import migrations
 
 from api_activity.static import ActivityData
-from common.constants.api_activity import ActivityType
 from utils.activity import read_content
 
 
