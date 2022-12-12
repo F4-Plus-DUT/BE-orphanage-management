@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from api_activity.models import AdoptRequestDetail
 from api_activity.serializers import RegisterAdoptRequestDetailSerializer, \
     AdoptRequestDetailSerializer
-from api_activity.services import ProofService
+from api_activity.services import ProofService, AdoptRequestDetailService
 from base.permission.permission import MyActionPermission
 from base.views import BaseViewSet
 from common.constants.base import ErrorResponse, ErrorResponseType, HttpMethod
@@ -24,7 +24,7 @@ class AdoptRequestDetailViewSet(BaseViewSet):
         data = request.data
         data['adopter'] = request.user.profile.id
         serializer = RegisterAdoptRequestDetailSerializer(data=data)
-        if serializer.is_valid(raise_exception=True):
+        if serializer.is_valid(raise_exception=True) and AdoptRequestDetailService.check_request(data):
             with transaction.atomic():
                 serializer.save()
                 ProofService.update_proof_model(request, serializer.data.get("id"))

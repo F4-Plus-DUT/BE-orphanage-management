@@ -22,6 +22,7 @@ class AdoptRequestViewSet(BaseViewSet):
         "create": ["adopt_request:create_adopt_request"],
         "update": ["adopt_request:update_adopt_request"],
         "get_total_request": ["adopt_request:view_adopt_request"],
+        "do_action": ["adopt_request:update_adopt_request"],
     }
 
     def list(self, request, *args, **kwargs):
@@ -32,7 +33,7 @@ class AdoptRequestViewSet(BaseViewSet):
 
     def create(self, request, *args, **kwargs):
         serializer = RegisterAdoptRequestSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
+        if serializer.is_valid(raise_exception=True) and AdoptRequestService.check_data(serializer.data):
             with transaction.atomic():
                 serializer.save()
                 instance = AdoptRequest.objects.filter(adopt_request_detail=serializer.data.get('adopt_request_detail')).first()
@@ -45,7 +46,6 @@ class AdoptRequestViewSet(BaseViewSet):
     def do_action(self, request, *args, **kwargs):
         instance = self.get_object()
         action_request = request.query_params.get("action")
-        # if instance and AdoptRequestService.check_action_request(instance, action_request):
         if instance:
             approver = request.user.profile
             res_data = self.get_serializer(AdoptRequestService.do_action(instance, approver, action_request)).data
