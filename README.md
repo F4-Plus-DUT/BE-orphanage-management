@@ -2,9 +2,11 @@
 
 ## Link ✨:
 - Trello: https://trello.com/b/bvI6sd3e/pbl6orphanagemanagement
+- Backend: https://github.com/F4-Plus-DUT/BE-orphanage-management
 - Mobile: https://github.com/F4-Plus-DUT/Mobile-orphanage-management
 - Frontend: https://github.com/hoangthien01/PBL6_Orphanage_Management
 - Demo: https://www.youtube.com/watch?v=dAh4pvFGl84
+- Slide: https://www.canva.com/design/DAFSvRRKiCM/pWkBeegajYo9h5yiv5AnwA/view?utm_content=DAFSvRRKiCM&utm_campaign=designshare&utm_medium=link&utm_source=homepage_design_menu#23
 
 
 ## INTRODUCTION ✨: 
