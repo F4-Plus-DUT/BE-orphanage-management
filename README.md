@@ -1,4 +1,4 @@
-# 19N12 - Team 7 - Charity: Corporate Social Responsibility Hub
+# 19N12 - Team 11 - Charity: Corporate Social Responsibility Hub
 
 ## Link ✨:
 - Trello: https://trello.com/b/bvI6sd3e/pbl6orphanagemanagement
