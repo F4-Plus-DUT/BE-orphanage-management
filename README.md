@@ -1,4 +1,11 @@
-# BE-orphanage-management
+# 19N12 - Team 7 - Charity: Corporate Social Responsibility Hub
+
+## Link ✨:
+- Trello: https://trello.com/b/bvI6sd3e/pbl6orphanagemanagement
+- Mobile: https://github.com/F4-Plus-DUT/Mobile-orphanage-management
+- Frontend: https://github.com/hoangthien01/PBL6_Orphanage_Management
+- Demo: https://www.youtube.com/watch?v=dAh4pvFGl84
+
 
 ## INTRODUCTION ✨: 
 - Have 3 agent: 
@@ -22,10 +29,4 @@
 - Trần Công Việt - <a href= "https://www.facebook.com/pikapika0710/"> Click me 🎤</a> - Mobile + Backend
 - Hồ Hoàng Thiện - <a href= "https://www.facebook.com/pikapika0710/"> Click me 🎤</a> - Frontend
 - Dương Xuân Ngọc Phong - <a href= "https://www.facebook.com/pikapika0710/"> Click me 🎤</a> - Mobile
-
-## Link ✨:
-- Trello: https://trello.com/b/bvI6sd3e/pbl6orphanagemanagement
-- Mobile: https://github.com/F4-Plus-DUT/Mobile-orphanage-management
-- Frontend: https://github.com/hoangthien01/PBL6_Orphanage_Management
-- Demo:https://www.youtube.com/watch?v=dAh4pvFGl84
 
