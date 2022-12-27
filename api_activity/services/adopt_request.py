@@ -141,7 +141,7 @@ class AdoptRequestService:
 
     @classmethod
     def check_data(cls, data):
-        children_id = data.get("children")
+        children_id = data.get("children").id
         children = Children.objects.filter(id=children_id).first()
         if children.status in [ChildrenStatus.ADOPTED, ChildrenStatus.PENDING]:
             return False

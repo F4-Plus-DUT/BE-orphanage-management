@@ -33,10 +33,10 @@ class AdoptRequestViewSet(BaseViewSet):
 
     def create(self, request, *args, **kwargs):
         serializer = RegisterAdoptRequestSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True) and AdoptRequestService.check_data(serializer.data):
+        if serializer.is_valid(raise_exception=True) and AdoptRequestService.check_data(serializer.validated_data):
             with transaction.atomic():
                 serializer.save()
-                instance = AdoptRequest.objects.filter(adopt_request_detail=serializer.data.get('adopt_request_detail')).first()
+                instance = AdoptRequest.objects.filter(adopt_request_detail=serializer.validated_data.get('adopt_request_detail')).first()
                 res_data = AdoptRequestSerializer(instance).data
                 AdoptRequestService.send_notify(serializer)
             return Response(res_data, status=status.HTTP_201_CREATED)
