@@ -3,6 +3,7 @@ import time
 from django.db import transaction
 from rest_framework import status
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from api_statistic.models import Donor
@@ -17,7 +18,7 @@ from common.constants.base import ErrorResponse, ErrorResponseType, HttpMethod
 class DonorViewSet(BaseViewSet):
     view_set_name = "donor"
     queryset = Donor.objects.all()
-    permission_classes = [MyActionPermission]
+    permission_classes = [IsAuthenticated, MyActionPermission]
     serializer_class = DonorSerializer
     serializer_map = {
         "list": DonorSortSerializer
